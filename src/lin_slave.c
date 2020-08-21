@@ -38,21 +38,6 @@
 */
 
 #include "lin_slave.h"
-#include "../eusart.h"
-#include "../tmr0.h"
-
-#define READ_TIMEOUT    15  //ms
-
-static void (*LIN_processData)(void);
-
-lin_packet_t LIN_packet;
-bool LIN_rxInProgress = false;
-const lin_rx_cmd_t* LIN_rxCommand;
-uint8_t LIN_rxCommandLength;
-
-static uint8_t LIN_timeout = 10; //TODO: Make dependent on Baudrate
-static bool LIN_timerRunning = false;
-static volatile uint8_t CountCallBack = 0;
 
 /**
  * 
@@ -61,48 +46,44 @@ static volatile uint8_t CountCallBack = 0;
  * @param command
  * @param processData
  */
-void LIN_init(lin_slave_node *slave){
-    //slave->rxCommand = command;
-    //slave->rxCommandLength = tableLength;
+void LIN_init(lin_slave_node *slave)
+{
     slave->stopTimer();
-    slave->enableRx()
-    LIN_setTimerHandler();
-    slave->rxInProgress = false;
+    slave->enableRx();
     slave->timerRunning = false;
     //slave->processData = processData;
 }
 
-void LIN_queuePacket(uint8_t cmd){
-    const lin_rx_cmd_t* tempSchedule = LIN_rxCommand;    //copy table pointer so we can modify it
+void LIN_queuePacket(lin_slave_node *slave)
+{
+    const lin_rx_cmd_t* tempSchedule = slave->rxCommand;    //copy table pointer so we can modify it
+    uint8_t cmd  = slave->pkg.PID & 0x3F;;
     
-    cmd &= 0x3F;    //clear possible parity bits
-    for(uint8_t i = 0; i < LIN_rxCommandLength; i++){
-        if(cmd == tempSchedule->cmd){
+    for (uint8_t i = 0; i < slave->rxCommandLength; i++){
+        if (cmd == tempSchedule->cmd){
             break;
         }
         tempSchedule++;    //go to next entry
     }
     
-    LIN_packet.type = tempSchedule->type;
-    LIN_packet.length = tempSchedule->length;
+    slave->pkg.type = tempSchedule->type;
+    slave->pkg.length = tempSchedule->length;
     
     //Build Packet - User defined data
     //add data
-    memcpy(LIN_packet.data, tempSchedule->data, LIN_packet.length);
+    memcpy(slave->pkg.data, tempSchedule->data, slave->pkg.length);
     
     //Add Checksum
-    LIN_packet.checksum = LIN_getChecksum(LIN_packet.length, LIN_packet.data);
-    LIN_sendPacket(LIN_packet.length, LIN_packet.data);
-
-    
+    slave->pkg.data[slave->pkg.length] = LIN_getChecksum(slave);
+    slave->writeData(slave->pkg.data, slave->pkg.length);
 }
 
-lin_rx_state_t LIN_handler(lin_slave_node *slave){
+lin_rx_state_t LIN_handler(lin_slave_node *slave)
+{
     static lin_rx_state_t LIN_rxState = LIN_RX_IDLE;
-    static uint8_t rxDataIndex = 0;
 
     if (slave->rxInProgress == true){
-        if(slave->timerRunning == false){
+        if(slave->timerIsRunning() == false){
             //Timeout
             slave->state = LIN_RX_ERROR;
         }
@@ -116,8 +97,7 @@ lin_rx_state_t LIN_handler(lin_slave_node *slave){
         case LIN_RX_BREAK:
             if (slave->breakReceived){
                 //Start Timer
-                LIN_startTimer(READ_TIMEOUT); 
-                LIN_rxInProgress = true;
+                slave->startTimer();
                 slave->state = LIN_RX_SYNC;
             }
             break;
@@ -127,96 +107,80 @@ lin_rx_state_t LIN_handler(lin_slave_node *slave){
             break;
         case LIN_RX_PID:
             //check LIN Parity bits
-            if(LIN_checkPID(slave) == false){
+            if (LIN_checkPID(slave) == false){
                 LIN_rxState = LIN_RX_ERROR;
                 break;
             }
-            slave->pkg.type = LIN_getFromTable(slave);
-            if(slave->pkg.type == RECEIVE){
-                slave->pkg.length = LIN_getFromTable(LIN_packet.PID, LENGTH);
+            slave->pkg.type = LIN_getFromTable(slave, TYPE);
+            if (slave->pkg.type == RECEIVE) {
+                slave->pkg.length = LIN_getFromTable(slave, LENGTH);
                 slave->state = LIN_RX_DATA;
             }
             else{
-                LIN_disableRx();
+                slave->disableRx();
                 slave->state = LIN_RX_TX_DATA;
             }
             break;
         case LIN_RX_DATA:
-            if (slave->rxCount() >= slave->pkg.length){
-                //received all data bytes
-                slave->state = LIN_RX_CHECKSUM;
-            }
-            break;
         case LIN_RX_CHECKSUM:
             if (slave->rxCount() >= slave->pkg.length) {
                 if(LIN_getChecksum(slave)) {
-                    slave.state = LIN_RX_ERROR;
+                    slave->state = LIN_RX_ERROR;
                 }
                 else {
-                    slave.state = LIN_RX_RDY;
+                    slave->state = LIN_RX_RDY;
                 }
             }
             break;
         case LIN_RX_TX_DATA:
-            LIN_queuePacket(LIN_packet.PID); //Send response automatically
+            LIN_queuePacket(slave); //Send response automatically
             LIN_rxState = LIN_RX_RDY;
         case LIN_RX_RDY:
-            LIN_processData();
+            slave->processData();
         case LIN_RX_ERROR:
-            LIN_stopTimer();
-            slave->CountCallBack = 0;
-            LIN_timerRunning = false
-            rxDataIndex = 0;
-            LIN_rxInProgress = false;
-            memset(slave->pkg, 0, sizeof(slave->pkg));  //clear receive data
+            slave->stopTimer();
+            memset(&slave->pkg, 0, sizeof(lin_slave_node));  //clear receive data
         case LIN_RX_WAIT:
-            if(TX1STAbits.TRMT){
-                LIN_enableRx();
-                LIN_rxState = LIN_RX_IDLE;
+            if (1) {
+                slave->enableRx();
+                slave->state = LIN_RX_IDLE;
             } else {
-                LIN_rxState = LIN_RX_WAIT;
+                slave->state = LIN_RX_WAIT;
             }
             break;
     }
     return LIN_rxState;
 }
 
-void LIN_sendPacket(uint8_t length, uint8_t* data){
-
-    //Write data    
-    for(uint8_t i = 0; i < length; i++){
-        EUSART_Write(*(data + i));
-    }
-    //Add Checksum
-    EUSART_Write(LIN_getChecksum(length, data));
-}
-
-uint8_t LIN_getPacket(uint8_t* data){
-    uint8_t cmd = LIN_packet.PID & 0x3F;
+uint8_t LIN_getPacket(lin_slave_node *slave, uint8_t* data)
+{
+    uint8_t cmd = slave->pkg.PID & 0x3F;
     
-    memcpy(data, LIN_packet.data, sizeof(LIN_packet.data));
-    memset(LIN_packet.rawPacket, 0, sizeof(LIN_packet.rawPacket));
+    memcpy(data, slave->pkg.data, sizeof(slave->pkg.data));
+    memset(slave->pkg.rawPacket, 0, sizeof(slave->pkg.rawPacket));
     
     return cmd;
 }
 
-uint8_t LIN_getFromTable(uint8_t cmd, lin_sch_param_t param){
-    const lin_rx_cmd_t* rxCommand = LIN_rxCommand;    //copy table pointer so we can modify it
-    
+uint8_t LIN_getFromTable(lin_slave_node *slave, lin_sch_param_t param)
+{
+    const lin_rx_cmd_t* rxCommand = slave->rxCommand;    //copy table pointer so we can modify it
+
+    uint8_t cmd = slave->pkg.PID;
     cmd &= 0x3F;    //clear possible parity bits
     //check table
-    for(uint8_t length = 0; length < LIN_rxCommandLength; length++){
-        if(cmd == rxCommand->cmd){
+    for (uint8_t length = 0; length < slave->rxCommandLength; length++){
+        if (cmd == rxCommand->cmd){
             break;
         }
         rxCommand++;    //go to next entry
 
-        if(length == (LIN_rxCommandLength-1)){
+        if (length == (slave->rxCommandLength-1)) {
             return ERROR;   //command not in schedule table
         }
     }
     
-    switch(param){
+    switch (param) {
         case CMD:
             return rxCommand->cmd;
         case TYPE:
@@ -230,11 +194,12 @@ uint8_t LIN_getFromTable(uint8_t cmd, lin_sch_param_t param){
     return ERROR;
 }
 
-bool LIN_checkPID(uint8_t pid){
-    if(LIN_getFromTable(pid, TYPE) == ERROR)
+bool LIN_checkPID(lin_slave_node *slave)
+{
+    if (LIN_getFromTable(slave, TYPE) == ERROR)
         return false;   //PID not in schedule table
     
-    if(pid == LIN_calcParity(pid & 0x3F))
+    if(slave->pkg.PID == LIN_calcParity(slave->pkg.PID & 0x3F))
         return true;  
     
     return false; //Parity Error
@@ -259,10 +224,12 @@ uint8_t LIN_calcParity(uint8_t CMD){
     return PID.rawPID;
 }
 
-uint8_t LIN_getChecksum(uint8_t length, uint8_t* data){
+uint8_t LIN_getChecksum(lin_slave_node *slave)
+{
     uint16_t checksum = 0;
+    uint8_t *data = slave->pkg.data;
     
-    for (uint8_t i = 0; i < length; i++){
+    for (uint8_t i = 0; i < slave->pkg.length; i++){
         checksum = checksum + *data++;
         if(checksum > 0xFF)
             checksum -= 0xFF;
@@ -271,25 +238,3 @@ uint8_t LIN_getChecksum(uint8_t length, uint8_t* data){
     
     return (uint8_t)checksum;
 }
-
-void LIN_startTimer(uint8_t timeout){
-    LIN_timeout = timeout;
-    TMR0_WriteTimer(0);
-    NOP();
-    LIN_timerRunning = true;
-}
-
-void LIN_timerHandler(void){
-
-    // callback function
-    if (++CountCallBack >= LIN_timeout)
-    {
-        // ticker function call
-        LIN_stopTimer();
-    }
-}
-
-void LIN_setTimerHandler(void){
-    TMR0_SetInterruptHandler(LIN_timerHandler);
-}
-

@@ -108,14 +108,16 @@ typedef struct {
     /* USART data was ready for read */
     volatile bool data_ready;
     /* LIN Frame Timeout */
-    volatile uint8_t CountCallBack = 0;
+    //volatile uint8_t CountCallBack = 0;
     volatile bool timerRunning;
     volatile bool rxInProgress;
     void (*startTimer)(void);
     void (*stopTimer)(void);
+    bool (*timerIsRunning)(void);
     void (*enableRx)(void);
     void (*disableRx)(void);
     void (*processData)(void);
+    void (*writeData)(void *buffer, const size_t size);
     size_t (*rxCount)(void);
     lin_rx_cmd_t* rxCommand;
     uint8_t rxCommandLength;
@@ -125,38 +127,24 @@ typedef struct {
 } lin_slave_node;
 
 //Set up schedule table timings
-void LIN_init(uint8_t tableLength, const lin_rx_cmd_t* const command, void (*processData)(void));
+void LIN_init(lin_slave_node *slave);
 
-void LIN_queuePacket(uint8_t cmd);
+void LIN_queuePacket(lin_slave_node *slave);
 
 void LIN_sendPacket(uint8_t length, uint8_t* data);
 
-uint8_t LIN_getPacket(uint8_t* data);
+uint8_t LIN_getPacket(lin_slave_node *slave, uint8_t* data);
 
-uint8_t LIN_getFromTable(uint8_t cmd, lin_sch_param_t param);
+uint8_t LIN_getFromTable(lin_slave_node *slave, lin_sch_param_t param);
 
-lin_rx_state_t LIN_handler(void);
+lin_rx_state_t LIN_handler(lin_slave_node *slave);
 
-bool LIN_checkPID(uint8_t pid);
+bool LIN_checkPID(lin_slave_node *slave);
 
-uint8_t LIN_getChecksum(uint8_t length, uint8_t* data);
+uint8_t LIN_getChecksum(lin_slave_node *slave);
 
 uint8_t LIN_calcParity(uint8_t CMD);
 
-//Timer Functions
-void LIN_startTimer(uint8_t timeout);
-
-void LIN_timerHandler(void);
-
-void LIN_setTimerHandler(void);
-
-void LIN_stopTimer(void);
-
-void LIN_enableRx(void);
-
-void LIN_disableRx(void);
-
-bool LIN_breakCheck(void);
 
 #endif	/* LIN_H */
 

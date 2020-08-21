@@ -89,14 +89,6 @@ typedef struct
     APP_LIN_SBC_STATES state;
 
     /* TODO: Define any additional data used by the application. */
-    /* Break received */
-    volatile bool break_ready;
-    /* USART data was ready for read */
-    volatile bool data_ready;
-    /* LIN Frame Timeout */
-    volatile uint8_t CountCallBack = 0;
-    volatile bool timer_running;
-    volatile bool rxInProgress;
 
 } APP_LIN_SBC_DATA;
 
