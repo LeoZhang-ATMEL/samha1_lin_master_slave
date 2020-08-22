@@ -13,4 +13,4 @@
 */**/*.custom_argvars
 */**/*.dep
 
-!src/**/debug/
+!firmware/src/**/debug/
