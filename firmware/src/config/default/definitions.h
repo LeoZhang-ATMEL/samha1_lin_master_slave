@@ -69,6 +69,7 @@
 #include "app_lin_sbc.h"
 #include "app_lin_vcu.h"
 #include "app_lin_mc.h"
+#include "app.h"
 
 
 

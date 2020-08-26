@@ -95,6 +95,9 @@ SYS_CMD_Tasks();
     /* Call Application task APP_LIN_MC. */
     APP_LIN_MC_Tasks();
 
+    /* Call Application task APP. */
+    APP_Tasks();
+
 
 
 

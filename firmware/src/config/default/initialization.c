@@ -215,6 +215,7 @@ void SYS_Initialize ( void* data )
     APP_LIN_SBC_Initialize();
     APP_LIN_VCU_Initialize();
     APP_LIN_MC_Initialize();
+    APP_Initialize();
 
 
     NVIC_Initialize();
