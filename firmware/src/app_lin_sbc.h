@@ -89,7 +89,8 @@ typedef struct
     APP_LIN_SBC_STATES state;
 
     /* TODO: Define any additional data used by the application. */
-
+    uint8_t countCallBack;
+    volatile bool dataReady;
 } APP_LIN_SBC_DATA;
 
 // *****************************************************************************

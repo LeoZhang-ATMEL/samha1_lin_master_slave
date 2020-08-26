@@ -118,11 +118,11 @@ typedef struct {
     void (*disableRx)(void);
     void (*processData)(void);
     void (*writeData)(void *buffer, const size_t size);
-    size_t (*rxCount)(void);
     lin_rx_cmd_t* rxCommand;
     uint8_t rxCommandLength;
     
     lin_packet_t pkg;
+    uint8_t rxDataIndex;
 
 } lin_slave_node;
 

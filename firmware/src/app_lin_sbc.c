@@ -41,6 +41,7 @@ typedef enum {
     LFRX = 0x02
 }lin_cmd_t;
 
+#define APP_LIN_SBC_TIMEOUT 15
 // *****************************************************************************
 /* Application Data
 
@@ -77,34 +78,44 @@ const lin_rx_cmd_t linSBCCmdTable[] = {
 #define TABLE_SIZE  (sizeof(linSBCCmdTable)/sizeof(lin_rx_cmd_t))
 /* Timeout ms for LIN frame (dependence on BAUDRATE) */
 
-#if 0
+
+static void APP_LIN_SBC_DisableRx(void);
+static void APP_LIN_SBC_EnableRx(void);
+static void processLINSbc(void);
+
 lin_slave_node lin_sbc_node = {
-    .startTimer = TC3_TimerStart(),
-    .stopTimer = TC3_TimerStop(),
+    .state = LIN_RX_IDLE,
+    .rxInProgress = false,
+    .timerIsRunning = false,
+    .startTimer = TC3_TimerStart,
+    .stopTimer = TC3_TimerStop,
+    .disableRx = APP_LIN_SBC_DisableRx,
+    .enableRx = APP_LIN_SBC_EnableRx,
+    .processData = processLINSbc
 };
-#endif
+
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Callback Functions
 // *****************************************************************************
 // *****************************************************************************
-
+static uint8_t testdata;
 /* TODO:  Add any necessary callback functions.
 */
 void LIN_SBC_SERCOM_USART_CALLBACK( uintptr_t context )
 {
-    
+    lin_sbc.rxDataIndex++;
+    SYS_CONSOLE_PRINT("%02X", testdata);
+    SERCOM5_USART_Read(&testdata, 1);
 }
 
 void TC3_TIMER_CALLBACK(TC_TIMER_STATUS status, uintptr_t context)
 {
-#if 0
-    if (++app_lin_sbcData.CountCallBack >= APP_LIN_SBC_TIMEOUT) {
+    if (++app_lin_sbcData.countCallBack >= APP_LIN_SBC_TIMEOUT) {
         // reset ticker counter
-        app_lin_sbcData.CountCallBack = 0;
-        app_lin_sbcData.timer_running = false;
+        app_lin_sbcData.countCallBack = 0;
+        lin_sbc.timerRunning = false;
     }
-#endif
 }
 
 // *****************************************************************************
@@ -116,7 +127,8 @@ void TC3_TIMER_CALLBACK(TC_TIMER_STATUS status, uintptr_t context)
 
 /* TODO:  Add any necessary local functions.
 */
-void processLINSbc(void){
+void processLINSbc(void)
+{
     uint8_t cmd;
     uint8_t data[8];
 
@@ -132,6 +144,23 @@ void processLINSbc(void){
         default:
             break;
     }
+}
+
+static void APP_LIN_SBC_DisableRx(void)
+{
+    SERCOM5_REGS->USART_INT.SERCOM_CTRLB &= ~SERCOM_USART_INT_CTRLB_RXEN_Msk;
+    
+    /* Wait for sync */
+    while(SERCOM5_REGS->USART_INT.SERCOM_SYNCBUSY);
+}
+
+static void APP_LIN_SBC_EnableRx(void)
+{
+    SERCOM5_REGS->USART_INT.SERCOM_CTRLB |= SERCOM_USART_INT_CTRLB_RXEN_Msk;
+    
+    /* Wait for sync */
+    while(SERCOM5_REGS->USART_INT.SERCOM_SYNCBUSY);
+    SERCOM5_USART_Read(lin_sbc.pkg.data, 9);
 }
 
 // *****************************************************************************
@@ -156,8 +185,9 @@ void APP_LIN_SBC_Initialize ( void )
     /* TODO: Initialize your application's state machine and other
      * parameters.
      */
+    SERCOM5_USART_Read(&testdata, 1);
+    //TC3_TimerCallbackRegister(TC3_TIMER_CALLBACK, 0);
     SERCOM5_USART_ReadCallbackRegister(LIN_SBC_SERCOM_USART_CALLBACK, 0);
-    TC3_TimerCallbackRegister(TC3_TIMER_CALLBACK, 0);
 }
 
 
@@ -191,7 +221,7 @@ void APP_LIN_SBC_Tasks ( void )
 
         case APP_LIN_SBC_STATE_SERVICE_TASKS:
         {
-
+            //LIN_handler(&lin_sbc);
             break;
         }
 

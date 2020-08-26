@@ -84,7 +84,7 @@ void DMAC_Handler               ( void ) __attribute__((weak, alias("Dummy_Handl
 void EVSYS_Handler              ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SERCOM0_USART_InterruptHandler ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SERCOM1_USART_InterruptHandler ( void ) __attribute__((weak, alias("Dummy_Handler")));
-void SERCOM2_USART_InterruptHandler ( void ) __attribute__((weak, alias("Dummy_Handler")));
+void SERCOM2_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SERCOM3_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SERCOM4_Handler            ( void ) __attribute__((weak, alias("Dummy_Handler")));
 void SERCOM5_USART_InterruptHandler ( void ) __attribute__((weak, alias("Dummy_Handler")));
@@ -129,7 +129,7 @@ const DeviceVectors exception_table=
     .pfnEVSYS_Handler              = ( void * ) EVSYS_Handler,
     .pfnSERCOM0_Handler            = ( void * ) SERCOM0_USART_InterruptHandler,
     .pfnSERCOM1_Handler            = ( void * ) SERCOM1_USART_InterruptHandler,
-    .pfnSERCOM2_Handler            = ( void * ) SERCOM2_USART_InterruptHandler,
+    .pfnSERCOM2_Handler            = ( void * ) SERCOM2_Handler,
     .pfnSERCOM3_Handler            = ( void * ) SERCOM3_Handler,
     .pfnSERCOM4_Handler            = ( void * ) SERCOM4_Handler,
     .pfnSERCOM5_Handler            = ( void * ) SERCOM5_USART_InterruptHandler,

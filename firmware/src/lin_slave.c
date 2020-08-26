@@ -99,6 +99,7 @@ lin_rx_state_t LIN_handler(lin_slave_node *slave)
                 //Start Timer
                 slave->startTimer();
                 slave->state = LIN_RX_SYNC;
+                slave->rxDataIndex = 0;
             }
             break;
         case LIN_RX_SYNC:
@@ -106,24 +107,26 @@ lin_rx_state_t LIN_handler(lin_slave_node *slave)
             slave->state = LIN_RX_PID;
             break;
         case LIN_RX_PID:
-            //check LIN Parity bits
-            if (LIN_checkPID(slave) == false){
-                LIN_rxState = LIN_RX_ERROR;
-                break;
-            }
-            slave->pkg.type = LIN_getFromTable(slave, TYPE);
-            if (slave->pkg.type == RECEIVE) {
-                slave->pkg.length = LIN_getFromTable(slave, LENGTH);
-                slave->state = LIN_RX_DATA;
-            }
-            else{
-                slave->disableRx();
-                slave->state = LIN_RX_TX_DATA;
+            if (slave->rxDataIndex >= 1) {
+                //check LIN Parity bits
+                if (LIN_checkPID(slave) == false){
+                    LIN_rxState = LIN_RX_ERROR;
+                    break;
+                }
+                slave->pkg.type = LIN_getFromTable(slave, TYPE);
+                if (slave->pkg.type == RECEIVE) {
+                    slave->pkg.length = LIN_getFromTable(slave, LENGTH);
+                    slave->state = LIN_RX_DATA;
+                }
+                else{
+                    slave->disableRx();
+                    slave->state = LIN_RX_TX_DATA;
+                }
             }
             break;
         case LIN_RX_DATA:
         case LIN_RX_CHECKSUM:
-            if (slave->rxCount() >= slave->pkg.length) {
+            if (slave->rxDataIndex >= slave->pkg.length) {
                 if(LIN_getChecksum(slave)) {
                     slave->state = LIN_RX_ERROR;
                 }
