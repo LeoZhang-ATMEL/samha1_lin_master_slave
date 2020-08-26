@@ -92,10 +92,10 @@ lin_rx_state_t LIN_handler(lin_slave_node *slave)
     switch (slave->state) {
         case LIN_RX_IDLE:
             slave->enableRx();
-            slave->state = LIN_RX_BREAK;
+            slave->state = LIN_RX_PID;
             break;
         case LIN_RX_BREAK:
-            if (slave->breakReceived){
+            if (slave->breakReceived) {
                 //Start Timer
                 slave->startTimer();
                 slave->state = LIN_RX_SYNC;
@@ -107,7 +107,7 @@ lin_rx_state_t LIN_handler(lin_slave_node *slave)
             slave->state = LIN_RX_PID;
             break;
         case LIN_RX_PID:
-            if (slave->rxDataIndex >= 1) {
+            if (slave->rxDataCount() >= 1) {
                 //check LIN Parity bits
                 if (LIN_checkPID(slave) == false){
                     LIN_rxState = LIN_RX_ERROR;
@@ -126,8 +126,8 @@ lin_rx_state_t LIN_handler(lin_slave_node *slave)
             break;
         case LIN_RX_DATA:
         case LIN_RX_CHECKSUM:
-            if (slave->rxDataIndex >= slave->pkg.length) {
-                if(LIN_getChecksum(slave)) {
+            if (slave->rxDataCount() >= slave->pkg.length + 2) {
+                if (LIN_getChecksum(slave) != slave->pkg.rawPacket[slave->pkg.length + 1]) {
                     slave->state = LIN_RX_ERROR;
                 }
                 else {
@@ -142,7 +142,7 @@ lin_rx_state_t LIN_handler(lin_slave_node *slave)
             slave->processData();
         case LIN_RX_ERROR:
             slave->stopTimer();
-            memset(&slave->pkg, 0, sizeof(lin_slave_node));  //clear receive data
+            memset(&slave->pkg, 0, sizeof(lin_packet_t));  //clear receive data
         case LIN_RX_WAIT:
             if (1) {
                 slave->enableRx();
@@ -229,7 +229,7 @@ uint8_t LIN_calcParity(uint8_t CMD){
 
 uint8_t LIN_getChecksum(lin_slave_node *slave)
 {
-    uint16_t checksum = 0;
+    volatile uint16_t checksum = 0;
     uint8_t *data = slave->pkg.data;
     
     for (uint8_t i = 0; i < slave->pkg.length; i++){

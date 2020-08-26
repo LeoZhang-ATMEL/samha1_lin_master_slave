@@ -80,6 +80,7 @@ size_t SERCOM5_USART_WriteCountGet( void );
 void SERCOM5_USART_WriteCallbackRegister( SERCOM_USART_CALLBACK callback, uintptr_t context );
 
 bool SERCOM5_USART_Read( void *buffer, const size_t size );
+void SERCOM5_USART_Abort_Read( void );
 
 bool SERCOM5_USART_ReadIsBusy( void );
 

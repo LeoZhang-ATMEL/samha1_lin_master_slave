@@ -13,8 +13,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3"/>
           <PhysicalPath dnOrder="4">/../../</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">3C13720844166A5D97CF4EAD9DDB9FE2</GeneratedChecksum>
-          <UserChecksum dnOrder="6">3C13720844166A5D97CF4EAD9DDB9FE2</UserChecksum>
+          <GeneratedChecksum dnOrder="5"/>
+          <UserChecksum dnOrder="6"/>
         </File>
         <File dnOrder="1">
           <Type dnOrder="0">SOURCE</Type>
@@ -139,8 +139,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/default/peripheral/port/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/port/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">AB75D874E828EBD6C4BB0E97CD4DDC77</GeneratedChecksum>
-          <UserChecksum dnOrder="6">AB75D874E828EBD6C4BB0E97CD4DDC77</UserChecksum>
+          <GeneratedChecksum dnOrder="5">02D6F6B9133660E6E23A93DFA77EF42C</GeneratedChecksum>
+          <UserChecksum dnOrder="6">02D6F6B9133660E6E23A93DFA77EF42C</UserChecksum>
         </File>
         <File dnOrder="15">
           <Type dnOrder="0">SOURCE</Type>
@@ -328,8 +328,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3"/>
           <PhysicalPath dnOrder="4">/../../</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">336C8E87CE40294B92A745B5F2E80300</GeneratedChecksum>
-          <UserChecksum dnOrder="6">336C8E87CE40294B92A745B5F2E80300</UserChecksum>
+          <GeneratedChecksum dnOrder="5"/>
+          <UserChecksum dnOrder="6"/>
         </File>
         <File dnOrder="36">
           <Type dnOrder="0">HEADER</Type>
@@ -598,8 +598,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/default/peripheral/port/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/port/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">180ED1320FF48EC624BDACA0094D9BEF</GeneratedChecksum>
-          <UserChecksum dnOrder="6">180ED1320FF48EC624BDACA0094D9BEF</UserChecksum>
+          <GeneratedChecksum dnOrder="5">F0F3CE254630849233ABB2CF004135CE</GeneratedChecksum>
+          <UserChecksum dnOrder="6">F0F3CE254630849233ABB2CF004135CE</UserChecksum>
         </File>
         <File dnOrder="66">
           <Type dnOrder="0">HEADER</Type>

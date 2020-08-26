@@ -214,17 +214,17 @@
     <conf name="default" type="2">
       <toolsSet>
         <developmentServer>localhost</developmentServer>
-        <targetDevice>ATSAMHA1G16AB</targetDevice>
+        <targetDevice>ATSAMHA1G16A</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool></platformTool>
+        <platformTool>EdbgTool</platformTool>
         <languageToolchain>XC32</languageToolchain>
         <languageToolchainVersion>2.40</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAMHA1_DFP" vendor="Microchip" version="2.0.42"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
+        <pack name="SAMHA1_DFP" vendor="Microchip" version="2.0.42"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>

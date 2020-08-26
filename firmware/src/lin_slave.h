@@ -123,6 +123,7 @@ typedef struct {
     
     lin_packet_t pkg;
     uint8_t rxDataIndex;
+    size_t (*rxDataCount)(void);
 
 } lin_slave_node;
 

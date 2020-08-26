@@ -57,7 +57,6 @@ typedef enum {
     Application strings and buffers are be defined outside this structure.
 */
 APP_LIN_SBC_DATA app_lin_sbcData;
-lin_slave_node lin_sbc;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -69,7 +68,7 @@ uint8_t UNLOCK_Data[1];
 uint8_t RSSI_Data[1];
 uint8_t LFRX_Data[8];
 
-const lin_rx_cmd_t linSBCCmdTable[] = {
+lin_rx_cmd_t linSBCCmdTable[] = {
     //Command, Type, TX/RX Length, Data Address
     {UNLOCK, RECEIVE, 1, UNLOCK_Data },
     {RSSI, RECEIVE, 1, RSSI_Data },
@@ -83,7 +82,7 @@ static void APP_LIN_SBC_DisableRx(void);
 static void APP_LIN_SBC_EnableRx(void);
 static void processLINSbc(void);
 
-lin_slave_node lin_sbc_node = {
+lin_slave_node lin_sbc = {
     .state = LIN_RX_IDLE,
     .rxInProgress = false,
     .timerIsRunning = false,
@@ -91,7 +90,10 @@ lin_slave_node lin_sbc_node = {
     .stopTimer = TC3_TimerStop,
     .disableRx = APP_LIN_SBC_DisableRx,
     .enableRx = APP_LIN_SBC_EnableRx,
-    .processData = processLINSbc
+    .processData = processLINSbc,
+    .rxDataCount = SERCOM5_USART_ReadCountGet,
+    .rxCommand = linSBCCmdTable,
+    .rxCommandLength = TABLE_SIZE,
 };
 
 // *****************************************************************************
@@ -136,6 +138,11 @@ void processLINSbc(void)
 
     switch (cmd) {
         case UNLOCK:
+            if (data[0] == 0x01) {
+                LED0_Clear();
+            } else {
+                LED0_Set();
+            }
             break;
         case RSSI:
             break;
@@ -156,11 +163,12 @@ static void APP_LIN_SBC_DisableRx(void)
 
 static void APP_LIN_SBC_EnableRx(void)
 {
+    SERCOM5_USART_Abort_Read();
+    SERCOM5_USART_Read(lin_sbc.pkg.rawPacket, 9);
     SERCOM5_REGS->USART_INT.SERCOM_CTRLB |= SERCOM_USART_INT_CTRLB_RXEN_Msk;
     
     /* Wait for sync */
     while(SERCOM5_REGS->USART_INT.SERCOM_SYNCBUSY);
-    SERCOM5_USART_Read(lin_sbc.pkg.data, 9);
 }
 
 // *****************************************************************************
@@ -185,9 +193,10 @@ void APP_LIN_SBC_Initialize ( void )
     /* TODO: Initialize your application's state machine and other
      * parameters.
      */
-    SERCOM5_USART_Read(&testdata, 1);
+    //SERCOM5_USART_Read(&testdata, 1);
     //TC3_TimerCallbackRegister(TC3_TIMER_CALLBACK, 0);
-    SERCOM5_USART_ReadCallbackRegister(LIN_SBC_SERCOM_USART_CALLBACK, 0);
+    //SERCOM5_USART_ReadCallbackRegister(LIN_SBC_SERCOM_USART_CALLBACK, 0);
+    //APP_LIN_SBC_EnableRx();
 }
 
 
@@ -221,7 +230,7 @@ void APP_LIN_SBC_Tasks ( void )
 
         case APP_LIN_SBC_STATE_SERVICE_TASKS:
         {
-            //LIN_handler(&lin_sbc);
+            LIN_handler(&lin_sbc);
             break;
         }
 
