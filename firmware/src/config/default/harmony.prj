@@ -176,7 +176,7 @@
           <LogicalPath dnOrder="3">config/default/peripheral/sercom/usart/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/sercom/usart/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">6E7BA94B4674BCBC9CB2ACED069A13B3</GeneratedChecksum>
-          <UserChecksum dnOrder="6">51DC9DE2C4A5E4043C90A76046EB440C</UserChecksum>
+          <UserChecksum dnOrder="6">66895FD6407D169BD00867E31A10F8E1</UserChecksum>
         </File>
         <File dnOrder="19">
           <Type dnOrder="0">SOURCE</Type>
@@ -635,7 +635,7 @@
           <LogicalPath dnOrder="3">config/default/peripheral/sercom/usart/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/sercom/usart/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">B9CC5C3EB925A7D460666DA2A1CC14FE</GeneratedChecksum>
-          <UserChecksum dnOrder="6">B9CC5C3EB925A7D460666DA2A1CC14FE</UserChecksum>
+          <UserChecksum dnOrder="6">9F37171ACB963D16B49C93F307A2C9C2</UserChecksum>
         </File>
         <File dnOrder="70">
           <Type dnOrder="0">HEADER</Type>
