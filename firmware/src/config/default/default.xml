@@ -1583,90 +1583,230 @@
             </String>
           </Attributes>
         </File>
-        <Boolean dnOrder="8" id="ENABLE_APP_FILE">
+        <File dnOrder="8" id="CONFIGURATION_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="9" id="DRIVER_COMMON">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="10" id="DRIVER_ROOT">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <Boolean dnOrder="11" id="ENABLE_APP_FILE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="HarmonyCore" value="true"/>
             <User dnOrder="1" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="9" id="ENABLE_DRV_COMMON">
+        <Boolean dnOrder="12" id="ENABLE_DRV_COMMON">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sys_command" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="10" id="ENABLE_OSAL">
+        <Boolean dnOrder="13" id="ENABLE_OSAL">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="HarmonyCore" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="11" id="ENABLE_SYS_CACHE">
+        <Boolean dnOrder="14" id="ENABLE_SYS_CACHE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="HarmonyCore" value="false"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="12" id="ENABLE_SYS_COMMON">
+        <Boolean dnOrder="15" id="ENABLE_SYS_COMMON">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sys_command" value="true"/>
           </Values>
         </Boolean>
-        <Boolean dnOrder="13" id="ENABLE_SYS_INT">
+        <Boolean dnOrder="16" id="ENABLE_SYS_INT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="HarmonyCore" value="true"/>
           </Values>
         </Boolean>
-        <Menu dnOrder="14" id="GEN_APP_TASK_CONF_MENU0">
+        <File dnOrder="17" id="GEN_APP_TASKS">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <Menu dnOrder="18" id="GEN_APP_TASK_CONF_MENU0">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Menu>
-        <Menu dnOrder="15" id="GEN_APP_TASK_CONF_MENU1">
+        <Menu dnOrder="19" id="GEN_APP_TASK_CONF_MENU1">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Menu>
-        <Menu dnOrder="16" id="GEN_APP_TASK_CONF_MENU2">
+        <Menu dnOrder="20" id="GEN_APP_TASK_CONF_MENU2">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Menu>
-        <Menu dnOrder="17" id="GEN_APP_TASK_CONF_MENU3">
+        <Menu dnOrder="21" id="GEN_APP_TASK_CONF_MENU3">
           <Attributes dnOrder="0">
             <Boolean dnOrder="0" id="visible">
               <Value dnOrder="0">true</Value>
             </Boolean>
           </Attributes>
         </Menu>
-        <Integer dnOrder="18" id="GEN_APP_TASK_COUNT">
+        <Integer dnOrder="22" id="GEN_APP_TASK_COUNT">
           <Values dnOrder="0">
             <User dnOrder="0" value="4"/>
           </Values>
         </Integer>
-        <String dnOrder="19" id="GEN_APP_TASK_NAME_0">
+        <Menu dnOrder="23" id="GEN_APP_TASK_MENU">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Menu>
+        <String dnOrder="24" id="GEN_APP_TASK_NAME_0">
           <Values dnOrder="0">
             <User dnOrder="0" value="app_lin_sbc"/>
           </Values>
         </String>
-        <String dnOrder="20" id="GEN_APP_TASK_NAME_1">
+        <String dnOrder="25" id="GEN_APP_TASK_NAME_1">
           <Values dnOrder="0">
             <User dnOrder="0" value="app_lin_vcu"/>
           </Values>
         </String>
-        <String dnOrder="21" id="GEN_APP_TASK_NAME_2">
+        <String dnOrder="26" id="GEN_APP_TASK_NAME_2">
           <Values dnOrder="0">
             <User dnOrder="0" value="app_lin_mc"/>
           </Values>
         </String>
-        <String dnOrder="22" id="GEN_APP_TASK_NAME_3">
+        <String dnOrder="27" id="GEN_APP_TASK_NAME_3">
           <Values dnOrder="0">
             <User dnOrder="0" value="app"/>
           </Values>
         </String>
+        <File dnOrder="28" id="INT_DEF">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="29" id="INT_HEADER">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="30" id="INT_MAPPING">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="31" id="INT_SOURCE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="32" id="OSAL_DEFINITIONS_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="33" id="OSAL_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="34" id="OSAL_IMPL_BASIC_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="35" id="OSAL_SYSDEF_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="36" id="SYSTEM_COMMON">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="37" id="SYSTEM_MODULE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="38" id="SYSTEM_ROOT">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="39" id="SYS_DEBUG_DEF_HEADER">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="40" id="SYS_DEBUG_HEADER">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="41" id="TASKS_C">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
+        <File dnOrder="42" id="USER_H">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="enabled">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </File>
       </Symbols>
     </UniqueComponent>
     <UniqueComponent dnOrder="5" id="nvmctrl">
@@ -1735,7 +1875,12 @@
           </Values>
         </String>
         <KeyValueSet dnOrder="2" id="SERCOM_MODE">
-          <Values dnOrder="0">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="readOnly">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
             <Dynamic dnOrder="0" id="sercom1" value="0"/>
           </Values>
         </KeyValueSet>
@@ -1781,25 +1926,51 @@
             <Dynamic dnOrder="0" id="sercom1" value="63019"/>
           </Values>
         </Integer>
-        <Boolean dnOrder="9" id="USART_RING_BUFFER_ENABLE">
-          <Values dnOrder="0">
+        <Boolean dnOrder="9" id="USART_INTERRUPT_MODE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="readOnly">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Boolean>
+        <Boolean dnOrder="10" id="USART_RING_BUFFER_ENABLE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="readOnly">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+          <Values dnOrder="1">
             <Dynamic dnOrder="0" id="sercom1" value="true"/>
           </Values>
         </Boolean>
-        <KeyValueSet dnOrder="10" id="USART_RXPO">
+        <KeyValueSet dnOrder="11" id="USART_RXPO">
           <Values dnOrder="0">
             <User dnOrder="0" value="1"/>
           </Values>
         </KeyValueSet>
-        <Integer dnOrder="11" id="USART_SAMPLE_COUNT">
+        <Integer dnOrder="12" id="USART_RX_RING_BUFFER_SIZE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
+        </Integer>
+        <Integer dnOrder="13" id="USART_SAMPLE_COUNT">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom1" value="16"/>
           </Values>
         </Integer>
-        <Integer dnOrder="12" id="USART_SAMPLE_RATE">
+        <Integer dnOrder="14" id="USART_SAMPLE_RATE">
           <Values dnOrder="0">
             <Dynamic dnOrder="0" id="sercom1" value="0"/>
           </Values>
+        </Integer>
+        <Integer dnOrder="15" id="USART_TX_RING_BUFFER_SIZE">
+          <Attributes dnOrder="0">
+            <Boolean dnOrder="0" id="visible">
+              <Value dnOrder="0">true</Value>
+            </Boolean>
+          </Attributes>
         </Integer>
       </Symbols>
       <Attachments dnOrder="1">
@@ -1983,24 +2154,24 @@
                 <Dynamic dnOrder="0" id="sys_console" value="0"/>
               </Values>
             </Integer>
-            <File dnOrder="4" id="SYS_CONSOLE_UART_DEFINITIONS_HEADER">
+            <File dnOrder="4" id="SYS_CONSOLE_USB_CDC_SOURCE">
               <Attributes dnOrder="0">
                 <Boolean dnOrder="0" id="enabled">
-                  <Value dnOrder="0">true</Value>
+                  <Value dnOrder="0">false</Value>
                 </Boolean>
               </Attributes>
             </File>
-            <File dnOrder="5" id="SYS_CONSOLE_UART_HEADER">
+            <File dnOrder="5" id="SYS_CONSOLE_USB_DEFINITIONS_HEADER">
               <Attributes dnOrder="0">
                 <Boolean dnOrder="0" id="enabled">
-                  <Value dnOrder="0">true</Value>
+                  <Value dnOrder="0">false</Value>
                 </Boolean>
               </Attributes>
             </File>
-            <File dnOrder="6" id="SYS_CONSOLE_UART_SOURCE">
+            <File dnOrder="6" id="SYS_CONSOLE_USB_HEADER">
               <Attributes dnOrder="0">
                 <Boolean dnOrder="0" id="enabled">
-                  <Value dnOrder="0">true</Value>
+                  <Value dnOrder="0">false</Value>
                 </Boolean>
               </Attributes>
             </File>
@@ -2134,19 +2305,19 @@
     <GraphSettings canvasHeight="400" canvasWidth="400" dnOrder="0"/>
     <ComponentGraph dnOrder="1" id="__ROOTVIEW">
       <ElementPositions dnOrder="0">
-        <ElementPosition dnOrder="0" id="HarmonyCore" x="271" y="58"/>
+        <ElementPosition dnOrder="0" id="HarmonyCore" x="233" y="68"/>
         <ElementPosition dnOrder="1" id="adc" x="133" y="248"/>
-        <ElementPosition dnOrder="2" id="core" x="501" y="20"/>
+        <ElementPosition dnOrder="2" id="core" x="500" y="23"/>
         <ElementPosition dnOrder="3" id="dfp" x="300" y="20"/>
         <ElementPosition dnOrder="4" id="evsys" x="160" y="20"/>
         <ElementPosition dnOrder="5" id="nvmctrl" x="20" y="20"/>
         <ElementPosition dnOrder="6" id="sercom0" x="128" y="302"/>
-        <ElementPosition dnOrder="7" id="sercom1" x="131" y="131"/>
+        <ElementPosition dnOrder="7" id="sercom1" x="132" y="164"/>
         <ElementPosition dnOrder="8" id="sercom2" x="288" y="302"/>
         <ElementPosition dnOrder="9" id="sercom5" x="524" y="305"/>
-        <ElementPosition dnOrder="10" id="sys_command" x="642" y="163"/>
-        <ElementPosition dnOrder="11" id="sys_console" x="426" y="67"/>
-        <ElementPosition dnOrder="12" id="sys_debug" x="642" y="49"/>
+        <ElementPosition dnOrder="10" id="sys_command" x="600" y="20"/>
+        <ElementPosition dnOrder="11" id="sys_console" x="386" y="96"/>
+        <ElementPosition dnOrder="12" id="sys_debug" x="605" y="179"/>
         <ElementPosition dnOrder="13" id="tc3" x="676" y="350"/>
         <ElementPosition dnOrder="14" id="tcc1" x="407" y="352"/>
       </ElementPositions>

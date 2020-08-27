@@ -88,7 +88,7 @@ void static SERCOM5_USART_ErrorClear( void )
     (void)u8dummyData;
 }
 #define BAUD_SAMPLES_PER_BIT            16 
-#define BAUD_FLOAT                      ((float) 8000000 / ((float) BAUD_SAMPLES_PER_BIT * (float) 9600))
+#define BAUD_FLOAT                      ((float) 8000000 / ((float) BAUD_SAMPLES_PER_BIT * (float) 19200))
 #define BAUD_INT                        (uint16_t) (BAUD_FLOAT)
 #define BAUD_FP                         ((((uint16_t) (BAUD_FLOAT * 8.0)) & 0x0007) << 13)
 
