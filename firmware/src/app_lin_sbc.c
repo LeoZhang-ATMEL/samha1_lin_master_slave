@@ -65,8 +65,8 @@ APP_LIN_SBC_DATA app_lin_sbcData;
 // *****************************************************************************
 
 uint8_t UNLOCK_Data[1];
-uint8_t RSSI_Data[1];
-uint8_t LFRX_Data[8];
+uint8_t RSSI_Data[1] = {0x10};
+uint8_t LFRX_Data[8] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
 
 lin_rx_cmd_t linSBCCmdTable[] = {
     //Command, Type, TX/RX Length, Data Address
@@ -92,6 +92,7 @@ lin_slave_node lin_sbc = {
     .enableRx = APP_LIN_SBC_EnableRx,
     .processData = processLINSbc,
     .rxDataCount = SERCOM5_USART_ReadCountGet,
+    .writeData = SERCOM5_USART_Write,
     .rxCommand = linSBCCmdTable,
     .rxCommandLength = TABLE_SIZE,
 };
@@ -109,6 +110,11 @@ void LIN_SBC_SERCOM_USART_CALLBACK( uintptr_t context )
     lin_sbc.rxDataIndex++;
     SYS_CONSOLE_PRINT("%02X", testdata);
     SERCOM5_USART_Read(&testdata, 1);
+}
+
+void LIN_SBC_SERCOM_USART_TX_CALLBACK( uintptr_t context )
+{
+    lin_sbc.writeFinished = true;
 }
 
 void TC3_TIMER_CALLBACK(TC_TIMER_STATUS status, uintptr_t context)
@@ -155,6 +161,7 @@ void processLINSbc(void)
 
 static void APP_LIN_SBC_DisableRx(void)
 {
+    SERCOM5_USART_Abort_Read();
     SERCOM5_REGS->USART_INT.SERCOM_CTRLB &= ~SERCOM_USART_INT_CTRLB_RXEN_Msk;
     
     /* Wait for sync */
@@ -163,6 +170,7 @@ static void APP_LIN_SBC_DisableRx(void)
 
 static void APP_LIN_SBC_EnableRx(void)
 {
+    lin_sbc.writeFinished = false;
     SERCOM5_USART_Abort_Read();
     SERCOM5_USART_Read(lin_sbc.pkg.rawPacket, 9);
     SERCOM5_REGS->USART_INT.SERCOM_CTRLB |= SERCOM_USART_INT_CTRLB_RXEN_Msk;
@@ -195,7 +203,7 @@ void APP_LIN_SBC_Initialize ( void )
      */
     //SERCOM5_USART_Read(&testdata, 1);
     //TC3_TimerCallbackRegister(TC3_TIMER_CALLBACK, 0);
-    //SERCOM5_USART_ReadCallbackRegister(LIN_SBC_SERCOM_USART_CALLBACK, 0);
+    SERCOM5_USART_WriteCallbackRegister(LIN_SBC_SERCOM_USART_TX_CALLBACK, 0);
     //APP_LIN_SBC_EnableRx();
 }
 

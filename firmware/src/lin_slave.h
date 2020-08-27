@@ -51,6 +51,7 @@ typedef enum {
     LIN_RX_DATA,
     LIN_RX_CHECKSUM,
     LIN_RX_TX_DATA,
+    LIN_RX_TX_READY,
     LIN_RX_RDY,
     LIN_RX_ERROR,
     LIN_RX_WAIT
@@ -117,7 +118,8 @@ typedef struct {
     void (*enableRx)(void);
     void (*disableRx)(void);
     void (*processData)(void);
-    void (*writeData)(void *buffer, const size_t size);
+    bool (*writeData)(void *buffer, const size_t size);
+    bool writeFinished;
     lin_rx_cmd_t* rxCommand;
     uint8_t rxCommandLength;
     
@@ -138,7 +140,7 @@ uint8_t LIN_getPacket(lin_slave_node *slave, uint8_t* data);
 
 uint8_t LIN_getFromTable(lin_slave_node *slave, lin_sch_param_t param);
 
-lin_rx_state_t LIN_handler(lin_slave_node *slave);
+void LIN_handler(lin_slave_node *slave);
 
 bool LIN_checkPID(lin_slave_node *slave);
 

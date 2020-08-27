@@ -75,13 +75,11 @@ void LIN_queuePacket(lin_slave_node *slave)
     
     //Add Checksum
     slave->pkg.data[slave->pkg.length] = LIN_getChecksum(slave);
-    slave->writeData(slave->pkg.data, slave->pkg.length);
+    slave->writeData(slave->pkg.data, slave->pkg.length + 1);
 }
 
-lin_rx_state_t LIN_handler(lin_slave_node *slave)
+void LIN_handler(lin_slave_node *slave)
 {
-    static lin_rx_state_t LIN_rxState = LIN_RX_IDLE;
-
     if (slave->rxInProgress == true){
         if(slave->timerIsRunning() == false){
             //Timeout
@@ -110,7 +108,7 @@ lin_rx_state_t LIN_handler(lin_slave_node *slave)
             if (slave->rxDataCount() >= 1) {
                 //check LIN Parity bits
                 if (LIN_checkPID(slave) == false){
-                    LIN_rxState = LIN_RX_ERROR;
+                    slave->state = LIN_RX_ERROR;
                     break;
                 }
                 slave->pkg.type = LIN_getFromTable(slave, TYPE);
@@ -137,7 +135,12 @@ lin_rx_state_t LIN_handler(lin_slave_node *slave)
             break;
         case LIN_RX_TX_DATA:
             LIN_queuePacket(slave); //Send response automatically
-            LIN_rxState = LIN_RX_RDY;
+            slave->state = LIN_RX_TX_READY;
+        case LIN_RX_TX_READY:
+            if (slave->writeFinished) {
+                slave->state = LIN_RX_RDY;
+            }
+            break;
         case LIN_RX_RDY:
             slave->processData();
         case LIN_RX_ERROR:
@@ -152,7 +155,6 @@ lin_rx_state_t LIN_handler(lin_slave_node *slave)
             }
             break;
     }
-    return LIN_rxState;
 }
 
 uint8_t LIN_getPacket(lin_slave_node *slave, uint8_t* data)
