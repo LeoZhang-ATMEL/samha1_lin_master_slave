@@ -39,7 +39,6 @@ int main ( void )
     /* Initialize all modules */
     SYS_Initialize ( NULL );
 
-    SYS_CONSOLE_MESSAGE("ATSAMHA1 LIN Examples Application\r\n");
     while ( true )
     {
         /* Maintain state machines of all polled MPLAB Harmony modules. */

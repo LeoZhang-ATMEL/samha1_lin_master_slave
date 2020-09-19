@@ -108,7 +108,6 @@ static uint8_t testdata;
 void LIN_SBC_SERCOM_USART_CALLBACK( uintptr_t context )
 {
     lin_sbc.rxDataIndex++;
-    SYS_CONSOLE_PRINT("%02X", testdata);
     SERCOM5_USART_Read(&testdata, 1);
 }
 
@@ -203,7 +202,6 @@ void APP_LIN_SBC_Initialize ( void )
      */
     //SERCOM5_USART_Read(&testdata, 1);
     //TC3_TimerCallbackRegister(TC3_TIMER_CALLBACK, 0);
-    SERCOM5_USART_WriteCallbackRegister(LIN_SBC_SERCOM_USART_TX_CALLBACK, 0);
     //APP_LIN_SBC_EnableRx();
 }
 
@@ -226,8 +224,7 @@ void APP_LIN_SBC_Tasks ( void )
         case APP_LIN_SBC_STATE_INIT:
         {
             bool appInitialized = true;
-
-
+            SERCOM5_USART_WriteCallbackRegister(LIN_SBC_SERCOM_USART_TX_CALLBACK, 0);
             if (appInitialized)
             {
 

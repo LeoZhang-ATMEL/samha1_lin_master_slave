@@ -48,24 +48,18 @@
 #include <stdint.h>
 #include <stddef.h>
 #include <stdbool.h>
+#include "peripheral/tcc/plib_tcc1.h"
 #include "peripheral/nvmctrl/plib_nvmctrl.h"
 #include "peripheral/sercom/usart/plib_sercom2_usart.h"
 #include "peripheral/sercom/usart/plib_sercom1_usart.h"
 #include "peripheral/evsys/plib_evsys.h"
 #include "peripheral/sercom/usart/plib_sercom0_usart.h"
-#include "system/command/sys_command.h"
 #include "peripheral/port/plib_port.h"
 #include "peripheral/clock/plib_clock.h"
 #include "peripheral/nvic/plib_nvic.h"
 #include "peripheral/sercom/usart/plib_sercom5_usart.h"
 #include "peripheral/adc/plib_adc.h"
 #include "peripheral/tc/plib_tc3.h"
-#include "peripheral/tcc/plib_tcc1.h"
-#include "system/console/sys_console.h"
-#include "system/console/src/sys_console_uart_definitions.h"
-#include "system/int/sys_int.h"
-#include "osal/osal.h"
-#include "system/debug/sys_debug.h"
 #include "app_lin_sbc.h"
 #include "app_lin_vcu.h"
 #include "app_lin_mc.h"
@@ -168,35 +162,6 @@ Remarks:
 
 void SYS_Tasks ( void );
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Type Definitions
-// *****************************************************************************
-// *****************************************************************************
-    
-// *****************************************************************************
-/* System Objects
-        
-Summary:
-    Structure holding the system's object handles
-        
-Description:
-    This structure contains the object handles for all objects in the
-    MPLAB Harmony project's system configuration.
-        
-Remarks:
-    These handles are returned from the "Initialize" functions for each module
-    and must be passed into the "Tasks" function for each module.
-*/
-        
-typedef struct
-{
-    SYS_MODULE_OBJ  sysDebug;
-
-    SYS_MODULE_OBJ  sysConsole0;
-
-
-} SYSTEM_OBJECTS;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -206,7 +171,6 @@ typedef struct
 
 
 
-extern SYSTEM_OBJECTS sysObj;
 
 //DOM-IGNORE-BEGIN
 #ifdef __cplusplus

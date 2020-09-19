@@ -71,7 +71,12 @@ void SERCOM5_USART_Initialize( void );
 
 bool SERCOM5_USART_SerialSetup( USART_SERIAL_SETUP * serialSetup, uint32_t clkFrequency );
 
+void SERCOM5_USART_TransmitterEnable( void );
+
+void SERCOM5_USART_TransmitterDisable( void );
+
 bool SERCOM5_USART_Write( void *buffer, const size_t size );
+
 
 bool SERCOM5_USART_WriteIsBusy( void );
 
@@ -79,12 +84,19 @@ size_t SERCOM5_USART_WriteCountGet( void );
 
 void SERCOM5_USART_WriteCallbackRegister( SERCOM_USART_CALLBACK callback, uintptr_t context );
 
+
+void SERCOM5_USART_ReceiverEnable( void );
+
+void SERCOM5_USART_ReceiverDisable( void );
+
 bool SERCOM5_USART_Read( void *buffer, const size_t size );
 void SERCOM5_USART_Abort_Read( void );
 
 bool SERCOM5_USART_ReadIsBusy( void );
 
 size_t SERCOM5_USART_ReadCountGet( void );
+
+bool SERCOM5_USART_ReadAbort(void);
 
 void SERCOM5_USART_ReadCallbackRegister( SERCOM_USART_CALLBACK callback, uintptr_t context );
 

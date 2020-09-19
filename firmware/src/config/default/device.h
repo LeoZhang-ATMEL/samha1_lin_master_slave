@@ -1,20 +1,22 @@
 /*******************************************************************************
-  Console System Service Local Data Structures
+  Device Header File
 
   Company:
     Microchip Technology Inc.
 
   File Name:
-    sys_console_local.h
+    device.h
 
   Summary:
-    Console System Service local declarations and definitions.
+    This file includes the selected device from within the project.
+    The device will provide access to respective device packs.
 
   Description:
-    This file contains the Console System Service local declarations and definitions.
+    None
+
 *******************************************************************************/
 
-//DOM-IGNORE-BEGIN
+// DOM-IGNORE-BEGIN
 /*******************************************************************************
 * Copyright (C) 2018 Microchip Technology Inc. and its subsidiaries.
 *
@@ -37,47 +39,17 @@
 * ANY WAY RELATED TO THIS SOFTWARE WILL NOT EXCEED THE AMOUNT OF FEES, IF ANY,
 * THAT YOU HAVE PAID DIRECTLY TO MICROCHIP FOR THIS SOFTWARE.
 *******************************************************************************/
-//DOM-IGNORE-END
-
-
-#ifndef SYS_CONSOLE_LOCAL_H
-#define SYS_CONSOLE_LOCAL_H
-
-
-// *****************************************************************************
-// *****************************************************************************
-// Section: File includes
-// *****************************************************************************
-// *****************************************************************************
-
-#include <stdint.h>
-#include <stdbool.h>
-#include <stddef.h>
-
-// DOM-IGNORE-BEGIN
-#ifdef __cplusplus  // Provide C++ Compatibility
-
-extern "C" {
-
-#endif
 // DOM-IGNORE-END
 
-// *****************************************************************************
-// *****************************************************************************
-// Section: Data Type Definitions
-// *****************************************************************************
-// *****************************************************************************
-
-typedef uintptr_t CONSOLE_DEVICE_INDEX;
-
-//DOM-IGNORE-BEGIN
-#ifdef __cplusplus
-}
+#pragma GCC diagnostic push
+#ifndef __cplusplus
+#pragma GCC diagnostic ignored "-Wnested-externs"
 #endif
-//DOM-IGNORE-END
+#pragma GCC diagnostic ignored "-Wsign-conversion"
+#pragma GCC diagnostic ignored "-Wattributes"
+#pragma GCC diagnostic ignored "-Wundef"
+#include "atsamha1g16ab.h"
+#pragma GCC diagnostic pop
+#include "device_cache.h"
+#include "toolchain_specifics.h"
 
-#endif //#ifndef SYS_CONSOLE_LOCAL_H
-
-/*******************************************************************************
- End of File
-*/

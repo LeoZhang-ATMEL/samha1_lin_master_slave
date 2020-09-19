@@ -98,7 +98,7 @@ void APP_Initialize ( void )
     /* TODO: Initialize your application's state machine and other
      * parameters.
      */
-
+#if 0
     uint8_t swVer[NVMCTRL_RWWEEPROM_PAGESIZE] = {0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10, 0x11};
     while(NVMCTRL_IsBusy()); // workaround for revE
     NVMCTRL_RWWEEPROM_PageWrite((uint32_t *)swVer, NVMCTRL_RWWEEPROM_START_ADDRESS); // workaround for revE
@@ -113,6 +113,7 @@ void APP_Initialize ( void )
 
     extern uint8_t LFRX_Data[8];
     NVMCTRL_RWWEEPROM_Read((uint32_t *)LFRX_Data, 8, NVMCTRL_RWWEEPROM_START_ADDRESS);
+#endif
 }
 
 

@@ -65,72 +65,88 @@
 // *****************************************************************************
 // *****************************************************************************
 
-  
 /*** Macros for LED0 pin ***/
 #define LED0_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 0)
 #define LED0_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 0)
 #define LED0_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 0)
-#define LED0_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 0)) & 0x01)
 #define LED0_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 0)
 #define LED0_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 0)
+#define LED0_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 0)) & 0x01)
 #define LED0_PIN                  PORT_PIN_PA00
 
 /*** Macros for LIN_VCU_EN pin ***/
 #define LIN_VCU_EN_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 2)
 #define LIN_VCU_EN_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 2)
 #define LIN_VCU_EN_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 2)
-#define LIN_VCU_EN_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 2)) & 0x01)
 #define LIN_VCU_EN_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 2)
 #define LIN_VCU_EN_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 2)
+#define LIN_VCU_EN_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 2)) & 0x01)
 #define LIN_VCU_EN_PIN                  PORT_PIN_PA02
+
+/*** Macros for Div_V pin ***/
+#define Div_V_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 3)) & 0x01)
+#define Div_V_PIN                  PORT_PIN_PA03
+
+/*** Macros for Current_Ana pin ***/
+#define Current_Ana_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 6)) & 0x01)
+#define Current_Ana_PIN                  PORT_PIN_PB06
+
+/*** Macros for Current_R pin ***/
+#define Current_R_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 7)) & 0x01)
+#define Current_R_PIN                  PORT_PIN_PB07
 
 /*** Macros for LIN_MOTOR_EN pin ***/
 #define LIN_MOTOR_EN_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 6)
 #define LIN_MOTOR_EN_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 6)
 #define LIN_MOTOR_EN_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 6)
-#define LIN_MOTOR_EN_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 6)) & 0x01)
 #define LIN_MOTOR_EN_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 6)
 #define LIN_MOTOR_EN_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 6)
+#define LIN_MOTOR_EN_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 6)) & 0x01)
 #define LIN_MOTOR_EN_PIN                  PORT_PIN_PA06
+
+/*** Macros for Touch_In pin ***/
+#define Touch_In_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 7)) & 0x01)
+#define Touch_In_PIN                  PORT_PIN_PA07
 
 /*** Macros for LIN_LED_EN pin ***/
 #define LIN_LED_EN_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 10)
 #define LIN_LED_EN_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 10)
 #define LIN_LED_EN_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 10)
-#define LIN_LED_EN_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 10)) & 0x01)
 #define LIN_LED_EN_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 10)
 #define LIN_LED_EN_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 10)
+#define LIN_LED_EN_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 10)) & 0x01)
 #define LIN_LED_EN_PIN                  PORT_PIN_PA10
+
+/*** Macros for Motor_PWM pin ***/
+#define Motor_PWM_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 11)) & 0x01)
+#define Motor_PWM_PIN                  PORT_PIN_PA11
 
 /*** Macros for INaa pin ***/
 #define INaa_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 16)
 #define INaa_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 16)
 #define INaa_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 16)
-#define INaa_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 16)) & 0x01)
 #define INaa_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 16)
 #define INaa_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 16)
+#define INaa_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 16)) & 0x01)
 #define INaa_PIN                  PORT_PIN_PA16
 
 /*** Macros for INbb pin ***/
 #define INbb_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 17)
 #define INbb_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 17)
 #define INbb_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 17)
-#define INbb_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 17)) & 0x01)
 #define INbb_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 17)
 #define INbb_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 17)
+#define INbb_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 17)) & 0x01)
 #define INbb_PIN                  PORT_PIN_PA17
 
 /*** Macros for LIN_SBC_EN pin ***/
 #define LIN_SBC_EN_Set()               (PORT_REGS->GROUP[1].PORT_OUTSET = 1 << 22)
 #define LIN_SBC_EN_Clear()             (PORT_REGS->GROUP[1].PORT_OUTCLR = 1 << 22)
 #define LIN_SBC_EN_Toggle()            (PORT_REGS->GROUP[1].PORT_OUTTGL = 1 << 22)
-#define LIN_SBC_EN_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 22)) & 0x01)
 #define LIN_SBC_EN_OutputEnable()      (PORT_REGS->GROUP[1].PORT_DIRSET = 1 << 22)
 #define LIN_SBC_EN_InputEnable()       (PORT_REGS->GROUP[1].PORT_DIRCLR = 1 << 22)
+#define LIN_SBC_EN_Get()               (((PORT_REGS->GROUP[1].PORT_IN >> 22)) & 0x01)
 #define LIN_SBC_EN_PIN                  PORT_PIN_PB22
-
-
-
 // *****************************************************************************
 /* PORT Group
 
@@ -274,6 +290,15 @@ typedef enum
 
     /* PB17 pin */
     PORT_PIN_PB17 = 49,
+
+    /* PB22 pin */
+    PORT_PIN_PB22 = 54,
+
+    /* PB23 pin */
+    PORT_PIN_PB23 = 55,
+
+    /* PB30 pin */
+    PORT_PIN_PB30 = 62,
 
     /* This element should not be used in any of the PORT APIs.
      * It will be used by other modules or application to denote that none of
@@ -877,7 +902,7 @@ void PORT_GroupToggle(PORT_GROUP group, uint32_t mask);
     void PORT_GroupInputEnable(PORT_GROUP group, uint32_t mask)
 
   Summary:
-    Confgiures the selected IO pins of a group as input.
+    Configures the selected IO pins of a group as input.
 
   Description:
     This function configures the selected IO pins of a group as input. The pins
@@ -916,7 +941,7 @@ void PORT_GroupInputEnable(PORT_GROUP group, uint32_t mask);
     void PORT_GroupOutputEnable(PORT_GROUP group, uint32_t mask)
 
   Summary:
-    Confgiures the selected IO pins of a group as output.
+    Configures the selected IO pins of a group as output.
 
   Description:
     This function configures the selected IO pins of a group as output. The pins

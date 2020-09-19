@@ -6,31 +6,27 @@
                    projectFiles="true">
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="default" projectFiles="true">
-          <logicalFolder name="f3" displayName="driver" projectFiles="true">
-            <itemPath>../src/config/default/driver/driver.h</itemPath>
-            <itemPath>../src/config/default/driver/driver_common.h</itemPath>
-          </logicalFolder>
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f7" displayName="adc" projectFiles="true">
+            <logicalFolder name="f8" displayName="adc" projectFiles="true">
               <itemPath>../src/config/default/peripheral/adc/plib_adc_common.h</itemPath>
               <itemPath>../src/config/default/peripheral/adc/plib_adc.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f5" displayName="clock" projectFiles="true">
+            <logicalFolder name="f6" displayName="clock" projectFiles="true">
               <itemPath>../src/config/default/peripheral/clock/plib_clock.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="evsys" projectFiles="true">
+            <logicalFolder name="f4" displayName="evsys" projectFiles="true">
               <itemPath>../src/config/default/peripheral/evsys/plib_evsys.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f6" displayName="nvic" projectFiles="true">
+            <logicalFolder name="f7" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/default/peripheral/nvic/plib_nvic.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="nvmctrl" projectFiles="true">
+            <logicalFolder name="f2" displayName="nvmctrl" projectFiles="true">
               <itemPath>../src/config/default/peripheral/nvmctrl/plib_nvmctrl.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="port" projectFiles="true">
+            <logicalFolder name="f5" displayName="port" projectFiles="true">
               <itemPath>../src/config/default/peripheral/port/plib_port.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="sercom" projectFiles="true">
+            <logicalFolder name="f3" displayName="sercom" projectFiles="true">
               <logicalFolder name="f1" displayName="usart" projectFiles="true">
                 <itemPath>../src/config/default/peripheral/sercom/usart/plib_sercom2_usart.h</itemPath>
                 <itemPath>../src/config/default/peripheral/sercom/usart/plib_sercom_usart_common.h</itemPath>
@@ -39,44 +35,22 @@
                 <itemPath>../src/config/default/peripheral/sercom/usart/plib_sercom5_usart.h</itemPath>
               </logicalFolder>
             </logicalFolder>
-            <logicalFolder name="f8" displayName="tc" projectFiles="true">
+            <logicalFolder name="f9" displayName="tc" projectFiles="true">
               <itemPath>../src/config/default/peripheral/tc/plib_tc_common.h</itemPath>
               <itemPath>../src/config/default/peripheral/tc/plib_tc3.h</itemPath>
             </logicalFolder>
-            <logicalFolder name="f9" displayName="tcc" projectFiles="true">
+            <logicalFolder name="f1" displayName="tcc" projectFiles="true">
               <itemPath>../src/config/default/peripheral/tcc/plib_tcc1.h</itemPath>
               <itemPath>../src/config/default/peripheral/tcc/plib_tcc_common.h</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f2" displayName="system" projectFiles="true">
-            <logicalFolder name="f1" displayName="command" projectFiles="true">
-              <itemPath>../src/config/default/system/command/sys_command.h</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f2" displayName="console" projectFiles="true">
-              <itemPath>../src/config/default/system/console/sys_console.h</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f4" displayName="debug" projectFiles="true">
-              <itemPath>../src/config/default/system/debug/sys_debug.h</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f3" displayName="int" projectFiles="true">
-              <itemPath>../src/config/default/system/int/sys_int.h</itemPath>
-              <itemPath>../src/config/default/system/int/sys_int_mapping.h</itemPath>
-            </logicalFolder>
-            <itemPath>../src/config/default/system/system.h</itemPath>
-            <itemPath>../src/config/default/system/system_common.h</itemPath>
-            <itemPath>../src/config/default/system/system_module.h</itemPath>
-          </logicalFolder>
           <itemPath>../src/config/default/device_cache.h</itemPath>
           <itemPath>../src/config/default/toolchain_specifics.h</itemPath>
           <itemPath>../src/config/default/definitions.h</itemPath>
+          <itemPath>../src/config/default/device.h</itemPath>
           <itemPath>../src/config/default/user.h</itemPath>
           <itemPath>../src/config/default/configuration.h</itemPath>
         </logicalFolder>
-      </logicalFolder>
-      <logicalFolder name="f3" displayName="osal" projectFiles="true">
-        <itemPath>../src/config/default/osal/osal.h</itemPath>
-        <itemPath>../src/config/default/osal/osal_definitions.h</itemPath>
-        <itemPath>../src/config/default/osal/osal_impl_basic.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="packs" projectFiles="true">
         <logicalFolder name="f1" displayName="ATSAMHA1G16AB_DFP" projectFiles="true">
@@ -106,7 +80,6 @@
           <logicalFolder name="f2" displayName="pio" projectFiles="true">
             <itemPath>../src/packs/ATSAMHA1G16AB_DFP/pio/samha1g16ab.h</itemPath>
           </logicalFolder>
-          <itemPath>../src/packs/ATSAMHA1G16AB_DFP/device.h</itemPath>
           <itemPath>../src/packs/ATSAMHA1G16AB_DFP/atsamha1g16ab.h</itemPath>
         </logicalFolder>
       </logicalFolder>
@@ -120,6 +93,11 @@
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
                    projectFiles="true">
+      <logicalFolder name="f1" displayName="config" projectFiles="true">
+        <logicalFolder name="f1" displayName="default" projectFiles="true">
+          <itemPath>../src/config/default/ATSAMHA1G16AB.ld</itemPath>
+        </logicalFolder>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
@@ -127,25 +105,25 @@
       <logicalFolder name="f1" displayName="config" projectFiles="true">
         <logicalFolder name="f1" displayName="default" projectFiles="true">
           <logicalFolder name="f1" displayName="peripheral" projectFiles="true">
-            <logicalFolder name="f7" displayName="adc" projectFiles="true">
+            <logicalFolder name="f8" displayName="adc" projectFiles="true">
               <itemPath>../src/config/default/peripheral/adc/plib_adc.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f5" displayName="clock" projectFiles="true">
+            <logicalFolder name="f6" displayName="clock" projectFiles="true">
               <itemPath>../src/config/default/peripheral/clock/plib_clock.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f3" displayName="evsys" projectFiles="true">
+            <logicalFolder name="f4" displayName="evsys" projectFiles="true">
               <itemPath>../src/config/default/peripheral/evsys/plib_evsys.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f6" displayName="nvic" projectFiles="true">
+            <logicalFolder name="f7" displayName="nvic" projectFiles="true">
               <itemPath>../src/config/default/peripheral/nvic/plib_nvic.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f1" displayName="nvmctrl" projectFiles="true">
+            <logicalFolder name="f2" displayName="nvmctrl" projectFiles="true">
               <itemPath>../src/config/default/peripheral/nvmctrl/plib_nvmctrl.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f4" displayName="port" projectFiles="true">
+            <logicalFolder name="f5" displayName="port" projectFiles="true">
               <itemPath>../src/config/default/peripheral/port/plib_port.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f2" displayName="sercom" projectFiles="true">
+            <logicalFolder name="f3" displayName="sercom" projectFiles="true">
               <logicalFolder name="f1" displayName="usart" projectFiles="true">
                 <itemPath>../src/config/default/peripheral/sercom/usart/plib_sercom2_usart.c</itemPath>
                 <itemPath>../src/config/default/peripheral/sercom/usart/plib_sercom1_usart.c</itemPath>
@@ -153,34 +131,15 @@
                 <itemPath>../src/config/default/peripheral/sercom/usart/plib_sercom5_usart.c</itemPath>
               </logicalFolder>
             </logicalFolder>
-            <logicalFolder name="f8" displayName="tc" projectFiles="true">
+            <logicalFolder name="f9" displayName="tc" projectFiles="true">
               <itemPath>../src/config/default/peripheral/tc/plib_tc3.c</itemPath>
             </logicalFolder>
-            <logicalFolder name="f9" displayName="tcc" projectFiles="true">
+            <logicalFolder name="f1" displayName="tcc" projectFiles="true">
               <itemPath>../src/config/default/peripheral/tcc/plib_tcc1.c</itemPath>
             </logicalFolder>
           </logicalFolder>
-          <logicalFolder name="f3" displayName="stdio" projectFiles="true">
+          <logicalFolder name="f2" displayName="stdio" projectFiles="true">
             <itemPath>../src/config/default/stdio/xc32_monitor.c</itemPath>
-          </logicalFolder>
-          <logicalFolder name="f2" displayName="system" projectFiles="true">
-            <logicalFolder name="f1" displayName="command" projectFiles="true">
-              <itemPath>../src/config/default/system/command/src/sys_command.c</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f3" displayName="console" projectFiles="true">
-              <itemPath>../src/config/default/system/console/src/sys_console.c</itemPath>
-              <itemPath>../src/config/default/system/console/src/sys_console_local.h</itemPath>
-              <itemPath>../src/config/default/system/console/src/sys_console_uart.h</itemPath>
-              <itemPath>../src/config/default/system/console/src/sys_console_uart_definitions.h</itemPath>
-              <itemPath>../src/config/default/system/console/src/sys_console_uart.c</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f2" displayName="debug" projectFiles="true">
-              <itemPath>../src/config/default/system/debug/src/sys_debug_local.h</itemPath>
-              <itemPath>../src/config/default/system/debug/src/sys_debug.c</itemPath>
-            </logicalFolder>
-            <logicalFolder name="f4" displayName="int" projectFiles="true">
-              <itemPath>../src/config/default/system/int/src/sys_int.c</itemPath>
-            </logicalFolder>
           </logicalFolder>
           <itemPath>../src/config/default/initialization.c</itemPath>
           <itemPath>../src/config/default/interrupts.c</itemPath>
@@ -204,6 +163,7 @@
       <itemPath>Makefile</itemPath>
       <itemPath>../src/config/default/harmony.prj</itemPath>
       <itemPath>../src/config/default/default.xml</itemPath>
+      <itemPath>../src/config/default/harmony-manifest-success.yml</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -214,7 +174,7 @@
     <conf name="default" type="2">
       <toolsSet>
         <developmentServer>localhost</developmentServer>
-        <targetDevice>ATSAMHA1G16A</targetDevice>
+        <targetDevice>ATSAMHA1G16AB</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
         <platformTool>EdbgTool</platformTool>
@@ -223,8 +183,8 @@
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="SAMHA1_DFP" vendor="Microchip" version="2.0.42"/>
         <pack name="CMSIS" vendor="ARM" version="5.4.0"/>
+        <pack name="SAMHA1_DFP" vendor="Microchip" version="2.0.42"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
@@ -297,17 +257,17 @@
         <property key="additional-warnings" value="true"/>
         <property key="addresss-attribute-use" value="false"/>
         <property key="enable-app-io" value="false"/>
-        <property key="enable-omit-frame-pointer" value="false"/>
+        <property key="enable-omit-frame-pointer" value="true"/>
         <property key="enable-symbols" value="true"/>
         <property key="enable-unroll-loops" value="false"/>
         <property key="exclude-floating-point" value="false"/>
         <property key="extra-include-directories"
-                  value="../src;../src/config/default;../src/packs/ATSAMHA1G16AB_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/"/>
+                  value="../src;../src/config/default;../src/packs/ATSAMHA1G16AB_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
         <property key="make-warnings-into-errors" value="true"/>
-        <property key="optimization-level" value="-O1"/>
+        <property key="optimization-level" value=""/>
         <property key="place-data-into-section" value="true"/>
         <property key="post-instruction-scheduling" value="default"/>
         <property key="pre-instruction-scheduling" value="default"/>
@@ -366,7 +326,7 @@
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-cross-reference-file" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
-        <property key="heap-size" value="512"/>
+        <property key="heap-size" value="1024"/>
         <property key="input-libraries" value=""/>
         <property key="kseg-length" value=""/>
         <property key="kseg-origin" value=""/>
@@ -397,7 +357,8 @@
         <property key="enable-unroll-loops" value="false"/>
         <property key="exceptions" value="true"/>
         <property key="exclude-floating-point" value="false"/>
-        <property key="extra-include-directories" value=""/>
+        <property key="extra-include-directories"
+                  value="../src;../src/config/default;../src/packs/ATSAMHA1G16AB_DFP;../src/packs/CMSIS/CMSIS/Core/Include;../src/packs/CMSIS/;"/>
         <property key="generate-16-bit-code" value="false"/>
         <property key="generate-micro-compressed-code" value="false"/>
         <property key="isolate-each-function" value="true"/>
@@ -432,7 +393,7 @@
         <property key="communication.activationmode" value="nohv"/>
         <property key="communication.interface" value="swd"/>
         <property key="communication.speed" value="2.000"/>
-        <property key="debugoptions.useswbreakpoints" value="true"/>
+        <property key="debugoptions.useswbreakpoints" value="false"/>
         <property key="firmware.path"
                   value="Press to browse for a specific firmware version"/>
         <property key="firmware.toolpack"
@@ -452,6 +413,8 @@
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-ffff"/>
         <property key="poweroptions.powerenable" value="false"/>
+        <property key="programmerToGoFilePath"
+                  value="D:/Workspace/AI/Customer/Antolin/2020/Lotus/project/firmware/firmware/ATSAMHA1_antolin.X/debug/default/ATSAMHA1_antolin_ptg"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.preservedataflash" value="false"/>
         <property key="programoptions.preservedataflash.ranges"
