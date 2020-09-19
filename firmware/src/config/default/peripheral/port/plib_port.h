@@ -65,15 +65,6 @@
 // *****************************************************************************
 // *****************************************************************************
 
-/*** Macros for LED0 pin ***/
-#define LED0_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 0)
-#define LED0_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 0)
-#define LED0_Toggle()            (PORT_REGS->GROUP[0].PORT_OUTTGL = 1 << 0)
-#define LED0_OutputEnable()      (PORT_REGS->GROUP[0].PORT_DIRSET = 1 << 0)
-#define LED0_InputEnable()       (PORT_REGS->GROUP[0].PORT_DIRCLR = 1 << 0)
-#define LED0_Get()               (((PORT_REGS->GROUP[0].PORT_IN >> 0)) & 0x01)
-#define LED0_PIN                  PORT_PIN_PA00
-
 /*** Macros for LIN_VCU_EN pin ***/
 #define LIN_VCU_EN_Set()               (PORT_REGS->GROUP[0].PORT_OUTSET = 1 << 2)
 #define LIN_VCU_EN_Clear()             (PORT_REGS->GROUP[0].PORT_OUTCLR = 1 << 2)

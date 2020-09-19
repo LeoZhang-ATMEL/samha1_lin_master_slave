@@ -144,9 +144,7 @@ void processLINSbc(void)
     switch (cmd) {
         case UNLOCK:
             if (data[0] == 0x01) {
-                LED0_Clear();
             } else {
-                LED0_Set();
             }
             break;
         case RSSI:
