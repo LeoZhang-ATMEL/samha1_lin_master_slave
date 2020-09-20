@@ -28,6 +28,7 @@
 // *****************************************************************************
 
 #include "app_lin_mc.h"
+#include "lin_master.h"
 
 // *****************************************************************************
 // *****************************************************************************
@@ -71,7 +72,21 @@ APP_LIN_MC_DATA app_lin_mcData;
 /* TODO:  Add any necessary local functions.
 */
 
-
+lin_master_node lin_mc = {
+    .state = LIN_RX_IDLE,
+    .rxInProgress = false,
+    .timerIsRunning = false,
+    .startTimer = TC3_TimerStart,
+    .stopTimer = TC3_TimerStop,
+    .disableRx = APP_LIN_MC_DisableRx,
+    .enableRx = APP_LIN_MC_EnableRx,
+    .abortRx = SERCOM0_USART_ReadAbort,
+    .processData = processLINMC,
+    .rxDataCount = SERCOM1_USART_ReadCountGet,
+    .writeData = SERCOM0_USART_Write,
+    .rxCommand = linSBCCmdTable,
+    .rxCommandLength = TABLE_SIZE,
+};
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Initialization and State Machine Functions

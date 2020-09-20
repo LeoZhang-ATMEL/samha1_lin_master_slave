@@ -20,7 +20,7 @@
 /* Section: Included Files                                                    */
 /* ************************************************************************** */
 /* ************************************************************************** */
-
+#include "lin_common.h"
 /* This section lists the other files that are included in this file.
  */
 
@@ -54,8 +54,6 @@
   @Remarks
     Any additional remarks
  */
-int global_data;
-
 
 /* ************************************************************************** */
 /* ************************************************************************** */
@@ -126,17 +124,37 @@ int global_data;
 
 // *****************************************************************************
 
-/** 
-  @Function
-    uint8_t LIN_getChecksum(uint8_t length, uint8_t* data)
+uint8_t LIN_calcParity(uint8_t CMD){
+    lin_pid_t PID;
+    PID.rawPID = CMD;
 
-  @Summary
-    Get Checksum for LIN Package.
+    //Workaround for compiler bug - CAE_MCU8-200:
+//    PID.P0 = PID.ID0 ^ PID.ID1 ^ PID.ID2 ^ PID.ID4;
+//    PID.P1 = ~(PID.ID1 ^ PID.ID3 ^ PID.ID4 ^ PID.ID5);
+    PID.P0 = PID.ID0 ^ PID.ID1;
+    PID.P0 = PID.P0 ^ PID.ID2;
+    PID.P0 = PID.P0 ^ PID.ID4;
+    PID.P1 = PID.ID1 ^ PID.ID3;
+    PID.P1 = PID.P1 ^ PID.ID4;
+    PID.P1 = PID.P1 ^ PID.ID5;
+    PID.P1 = ~PID.P1;
+    
+    return PID.rawPID;
+}
 
-  @Remarks
-    Refer to the example_file.h interface header for function usage details.
- */
-
+uint8_t LIN_getChecksum(uint8_t* data, uint8_t length)
+{
+    volatile uint16_t checksum = 0;
+    
+    for (uint8_t i = 0; i < length; i++){
+        checksum = checksum + *data++;
+        if(checksum > 0xFF)
+            checksum -= 0xFF;
+    }
+    checksum = ~checksum;
+    
+    return (uint8_t)checksum;
+}
 
 /* *****************************************************************************
  End of File

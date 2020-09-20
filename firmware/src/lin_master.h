@@ -1,17 +1,17 @@
 /**
-  LIN Slave Driver
+  LIN Master Driver
 	
   Company:
     Microchip Technology Inc.
 
   File Name:
-    lin_slave.h
+    lin_master.h
 
   Summary:
-    LIN Slave Driver
+    LIN Master Driver
 
   Description:
-    This header file provides the driver for LIN slave nodes
+    This header file provides the driver for LIN master nodes
 
  */
 
@@ -37,50 +37,42 @@
     TERMS.
 */
 
-#ifndef LIN_H
-#define	LIN_H
+#ifndef LIN_MASTER_H
+#define	LIN_MASTER_H
 #include <stdint.h>
 #include <stdbool.h>
 #include <string.h>
 #include "lin_common.h"
 
 typedef enum {
-    LIN_RX_IDLE,
-    LIN_RX_BREAK,
-    LIN_RX_SYNC,
-    LIN_RX_PID,
-    LIN_RX_DATA,
-    LIN_RX_CHECKSUM,
-    LIN_RX_TX_DATA,
-    LIN_RX_TX_READY,
-    LIN_RX_RDY,
-    LIN_RX_ERROR,
-    LIN_RX_WAIT
-}lin_rx_state_t;
-
-typedef enum {
-    CMD,
-    TYPE,
-    LENGTH
-}lin_sch_param_t;
+    LIN_M_IDLE,
+    LIN_M_TX_BREAK,
+    LIN_M_TX_IP,
+    LIN_M_RX_IP,
+    LIN_M_RX_RDY
+} lin_m_state_t;
 
 typedef struct {
     uint8_t cmd;
     lin_packet_type_t type;
     uint8_t length;
+    uint8_t timeout;
+    uint8_t period;
     uint8_t* data;
-}lin_rx_cmd_t;
+}lin_cmd_packet_t;
 
 typedef struct {
     /* The LIN current state */
-    lin_rx_state_t state;
+    lin_m_state_t state;
 
     /* Break received */
-    volatile bool breakReceived;
+    volatile bool breaksend;
     /* USART data was ready for read */
-    volatile bool data_ready;
+    volatile bool readReady;
+    volatile bool writeReady; /* Write Data Finished */
     /* LIN Frame Timeout */
     //volatile uint8_t CountCallBack = 0;
+    bool enablePeriodTx;
     volatile bool timerRunning;
     volatile bool rxInProgress;
     void (*startTimer)(void);
@@ -88,35 +80,63 @@ typedef struct {
     bool (*timerIsRunning)(void);
     void (*enableRx)(void);
     void (*disableRx)(void);
+    void (*abortRx)(void);
     void (*processData)(void);
+    bool (*readData)(void *buffer, const size_t size);
     bool (*writeData)(void *buffer, const size_t size);
-    bool writeFinished;
-    lin_rx_cmd_t* rxCommand;
-    uint8_t rxCommandLength;
+    
+    void (*sendBreak)(bool state); /* Send break */
+
+    lin_cmd_packet_t* txCommand;
+    uint8_t txCommandLength;
     
     lin_packet_t pkg;
+    uint8_t rxTimeout;
+
     uint8_t rxDataIndex;
     size_t (*rxDataCount)(void);
 
-} lin_slave_node;
+} lin_master_node;
 
 //Set up schedule table timings
-void LIN_init(lin_slave_node *slave);
 
-void LIN_queuePacket(lin_slave_node *slave);
+void LIN_init(uint8_t tableLength, const lin_cmd_packet_t* const table, void (*processData)(void));
 
-void LIN_sendPacket(uint8_t length, uint8_t* data);
+void LIN_queuePacket(uint8_t cmd, uint8_t* data);
 
-uint8_t LIN_getPacket(lin_slave_node *slave, uint8_t* data);
+bool LIN_receivePacket(void);
 
-uint8_t LIN_getFromTable(lin_slave_node *slave, lin_sch_param_t param);
+void LIN_sendPacket(void);
 
-void LIN_handler(lin_slave_node *slave);
+uint8_t LIN_getPacket(uint8_t* data);
 
-bool LIN_checkPID(lin_slave_node *slave);
+lin_m_state_t LIN_handler(void);
+
+uint8_t LIN_getChecksum(uint8_t length, uint8_t* data);
 
 uint8_t LIN_calcParity(uint8_t CMD);
 
+//Timer Functions
+void LIN_startTimer(uint8_t timeout);
 
-#endif	/* LIN_H */
+void LIN_timerHandler(void);
+
+void LIN_setTimerHandler(void);
+
+void LIN_stopTimer(void);
+
+void LIN_startPeriod(void);
+
+void LIN_stopPeriod(void);
+
+void LIN_enableRx(void);
+
+void LIN_disableRx(void);
+
+void LIN_sendBreak(void);
+
+void LIN_sendPeriodicTx(void);
+
+
+#endif	/* LIN_MASTER_H */
 

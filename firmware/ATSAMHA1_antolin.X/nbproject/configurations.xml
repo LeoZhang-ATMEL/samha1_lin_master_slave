@@ -89,6 +89,7 @@
       <itemPath>../src/app_lin_vcu.h</itemPath>
       <itemPath>../src/app_lin_mc.h</itemPath>
       <itemPath>../src/app.h</itemPath>
+      <itemPath>../src/lin_master.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -156,6 +157,7 @@
       <itemPath>../src/app_lin_vcu.c</itemPath>
       <itemPath>../src/app_lin_mc.c</itemPath>
       <itemPath>../src/app.c</itemPath>
+      <itemPath>../src/lin_master.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

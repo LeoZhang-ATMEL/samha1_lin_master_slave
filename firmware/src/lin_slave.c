@@ -57,7 +57,7 @@ void LIN_init(lin_slave_node *slave)
 void LIN_queuePacket(lin_slave_node *slave)
 {
     const lin_rx_cmd_t* tempSchedule = slave->rxCommand;    //copy table pointer so we can modify it
-    uint8_t cmd  = slave->pkg.PID & 0x3F;;
+    uint8_t cmd  = slave->pkg.PID & 0x3F;
     
     for (uint8_t i = 0; i < slave->rxCommandLength; i++){
         if (cmd == tempSchedule->cmd){
@@ -125,7 +125,7 @@ void LIN_handler(lin_slave_node *slave)
         case LIN_RX_DATA:
         case LIN_RX_CHECKSUM:
             if (slave->rxDataCount() >= slave->pkg.length + 2) {
-                if (LIN_getChecksum(slave) != slave->pkg.rawPacket[slave->pkg.length + 1]) {
+                if (LIN_getChecksum(slave->pkg.data, slave->pkg.length) != slave->pkg.rawPacket[slave->pkg.length + 1]) {
                     slave->state = LIN_RX_ERROR;
                 }
                 else {
@@ -209,37 +209,4 @@ bool LIN_checkPID(lin_slave_node *slave)
     
     return false; //Parity Error
 
-}
-
-uint8_t LIN_calcParity(uint8_t CMD){
-    lin_pid_t PID;
-    PID.rawPID = CMD;
-
-    //Workaround for compiler bug - CAE_MCU8-200:
-//    PID.P0 = PID.ID0 ^ PID.ID1 ^ PID.ID2 ^ PID.ID4;
-//    PID.P1 = ~(PID.ID1 ^ PID.ID3 ^ PID.ID4 ^ PID.ID5);
-    PID.P0 = PID.ID0 ^ PID.ID1;
-    PID.P0 = PID.P0 ^ PID.ID2;
-    PID.P0 = PID.P0 ^ PID.ID4;
-    PID.P1 = PID.ID1 ^ PID.ID3;
-    PID.P1 = PID.P1 ^ PID.ID4;
-    PID.P1 = PID.P1 ^ PID.ID5;
-    PID.P1 = ~PID.P1;
-    
-    return PID.rawPID;
-}
-
-uint8_t LIN_getChecksum(lin_slave_node *slave)
-{
-    volatile uint16_t checksum = 0;
-    uint8_t *data = slave->pkg.data;
-    
-    for (uint8_t i = 0; i < slave->pkg.length; i++){
-        checksum = checksum + *data++;
-        if(checksum > 0xFF)
-            checksum -= 0xFF;
-    }
-    checksum = ~checksum;
-    
-    return (uint8_t)checksum;
 }
