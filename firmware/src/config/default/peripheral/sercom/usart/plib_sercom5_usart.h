@@ -56,7 +56,7 @@
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus // Provide C++ Compatibility
 
-	extern "C" {
+    extern "C" {
 
 #endif
 // DOM-IGNORE-END
@@ -90,7 +90,6 @@ void SERCOM5_USART_ReceiverEnable( void );
 void SERCOM5_USART_ReceiverDisable( void );
 
 bool SERCOM5_USART_Read( void *buffer, const size_t size );
-void SERCOM5_USART_Abort_Read( void );
 
 bool SERCOM5_USART_ReadIsBusy( void );
 

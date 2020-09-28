@@ -81,10 +81,11 @@ typedef struct {
     /* USART data was ready for read */
     volatile bool readReady;
     volatile bool txFinished; /* Write Data Finished */
+    volatile bool txBreakFinished; /* Send Break Data Finished */
     /* LIN Frame Timeout */
     //volatile uint8_t CountCallBack = 0;
     bool enablePeriodTx;
-    volatile bool timerRunning;
+    volatile bool LIN_timerRunning;
     volatile bool rxInProgress;
     void (*startTimer)(void);
     void (*stopTimer)(void);

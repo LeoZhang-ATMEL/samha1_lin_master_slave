@@ -346,17 +346,6 @@ bool SERCOM5_USART_Read( void *buffer, const size_t size )
     return readStatus;
 }
 
-void SERCOM5_USART_Abort_Read( void )
-{
-    SERCOM5_REGS->USART_INT.SERCOM_INTENCLR = SERCOM_USART_INT_INTENCLR_RXC_Msk;
-    /* Clear errors before submitting the request.
-     * ErrorGet clears errors internally.
-     */
-    SERCOM5_USART_ErrorGet();
-    sercom5USARTObj.rxBusyStatus = false;
-    
-    sercom5USARTObj.rxSize = 0;
-}
 bool SERCOM5_USART_ReadIsBusy( void )
 {
     return sercom5USARTObj.rxBusyStatus;

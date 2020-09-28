@@ -109,11 +109,11 @@ void CLOCK_Initialize (void)
 
 
     /* Selection of the Generator and write Lock for SERCOM0_CORE */
-    GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_ID(20) | GCLK_CLKCTRL_GEN(0x0)  | GCLK_CLKCTRL_CLKEN_Msk;
+    GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_ID(20) | GCLK_CLKCTRL_GEN(0x1)  | GCLK_CLKCTRL_CLKEN_Msk;
     /* Selection of the Generator and write Lock for SERCOM1_CORE */
-    GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_ID(21) | GCLK_CLKCTRL_GEN(0x0)  | GCLK_CLKCTRL_CLKEN_Msk;
+    GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_ID(21) | GCLK_CLKCTRL_GEN(0x1)  | GCLK_CLKCTRL_CLKEN_Msk;
     /* Selection of the Generator and write Lock for SERCOM2_CORE */
-    GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_ID(22) | GCLK_CLKCTRL_GEN(0x0)  | GCLK_CLKCTRL_CLKEN_Msk;
+    GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_ID(22) | GCLK_CLKCTRL_GEN(0x1)  | GCLK_CLKCTRL_CLKEN_Msk;
     /* Selection of the Generator and write Lock for SERCOM5_CORE */
     GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_ID(25) | GCLK_CLKCTRL_GEN(0x1)  | GCLK_CLKCTRL_CLKEN_Msk;
     /* Selection of the Generator and write Lock for TCC0 TCC1 */
@@ -121,7 +121,7 @@ void CLOCK_Initialize (void)
     /* Selection of the Generator and write Lock for TC3 TCC2 */
     GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_ID(27) | GCLK_CLKCTRL_GEN(0x0)  | GCLK_CLKCTRL_CLKEN_Msk;
     /* Selection of the Generator and write Lock for ADC */
-    GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_ID(30) | GCLK_CLKCTRL_GEN(0x0)  | GCLK_CLKCTRL_CLKEN_Msk;
+    GCLK_REGS->GCLK_CLKCTRL = GCLK_CLKCTRL_ID(30) | GCLK_CLKCTRL_GEN(0x1)  | GCLK_CLKCTRL_CLKEN_Msk;
 
     /* Configure the APBC Bridge Clocks */
     PM_REGS->PM_APBCMASK = 0x10a9c;

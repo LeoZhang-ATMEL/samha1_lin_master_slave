@@ -158,7 +158,7 @@ void processLINSbc(void)
 
 static void APP_LIN_SBC_DisableRx(void)
 {
-    SERCOM5_USART_Abort_Read();
+    SERCOM5_USART_ReadAbort();
     SERCOM5_REGS->USART_INT.SERCOM_CTRLB &= ~SERCOM_USART_INT_CTRLB_RXEN_Msk;
     
     /* Wait for sync */
@@ -168,7 +168,7 @@ static void APP_LIN_SBC_DisableRx(void)
 static void APP_LIN_SBC_EnableRx(void)
 {
     lin_sbc.writeFinished = false;
-    SERCOM5_USART_Abort_Read();
+    SERCOM5_USART_ReadAbort();
     SERCOM5_USART_Read(lin_sbc.pkg.rawPacket, 9);
     SERCOM5_REGS->USART_INT.SERCOM_CTRLB |= SERCOM_USART_INT_CTRLB_RXEN_Msk;
     

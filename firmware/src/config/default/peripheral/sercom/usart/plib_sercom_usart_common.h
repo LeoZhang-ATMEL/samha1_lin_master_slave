@@ -359,13 +359,12 @@ typedef struct
 #define BAUD_SAMPLES_PER_BIT            16 
 #define BAUD_RATE_VAL                   19200
 #define BAUD_FLOAT_NORMAL               ((float) 8000000 / ((float) BAUD_SAMPLES_PER_BIT * (float) BAUD_RATE_VAL))
+//#define BAUD_FLOAT_BREAK                ((float) 8000000 / ((float) BAUD_SAMPLES_PER_BIT * ((float) BAUD_RATE_VAL * (float) 9 / (float) 13 )))
 #define BAUD_FLOAT_BREAK                ((float) 8000000 / ((float) BAUD_SAMPLES_PER_BIT * ((float) BAUD_RATE_VAL * (float) 9 / (float) 13 )))
 //#define BAUD_INT                        (uint16_t) (BAUD_FLOAT)
 //#define BAUD_FP                         ((((uint16_t) (BAUD_FLOAT * 8.0)) & 0x0007) << 13)
 #define BAUD_REG_NORMAL                 ((uint16_t) (BAUD_FLOAT_NORMAL) | ((((uint16_t) (BAUD_FLOAT_NORMAL * 8.0)) & 0x0007) << 13))
 #define BAUD_REG_BREAK                  ((uint16_t) (BAUD_FLOAT_BREAK) | ((((uint16_t) (BAUD_FLOAT_BREAK * 8.0)) & 0x0007) << 13))
-
-
 
 // DOM-IGNORE-BEGIN
 #ifdef __cplusplus  // Provide C++ Compatibility

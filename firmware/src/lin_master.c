@@ -37,7 +37,9 @@
     TERMS.
 */
 #include "lin_master.h"
+#include "config/default/peripheral/sercom/usart/plib_sercom0_usart.h"
 
+extern bool SERCOM0_USART_WriteIsBusy( void );
 lin_m_state_t LIN_M_handler(lin_master_node *master)
 {
     switch (master->state) {
@@ -47,6 +49,7 @@ lin_m_state_t LIN_M_handler(lin_master_node *master)
                 master->abortRx();
                 master->disableRx();
                 master->txFinished = false;
+                master->txBreakFinished = false;
                 master->sendBreak(true);
                 master->state = LIN_M_TX_BREAK;
             } else {
@@ -55,11 +58,17 @@ lin_m_state_t LIN_M_handler(lin_master_node *master)
             break;
         case LIN_M_TX_BREAK:
             //Transmission currently in progress.
-            if (master->txFinished == false) {
+            if (master->txBreakFinished == false || master->txBreakFinished == false) {
                 break;
             }
+            master->txFinished = false;
             master->sendBreak(false);
-            master->writeData(master->LIN_packet.rawPacket, master->LIN_packet.length + 3); /* Plus SYNC, PID and CRC for 3 bytes */
+            if (master->LIN_packet.type == RECEIVE) {
+                master->writeData(master->LIN_packet.rawPacket, 2); /* Plus SYNC, PID, 2 bytes */
+            } else {
+                master->writeData(master->LIN_packet.rawPacket, master->LIN_packet.length + 3); /* Plus SYNC, PID and CRC for 3 bytes */
+            }
+            master->state = LIN_M_TX_IP;
             break;
         case LIN_M_TX_IP:
             //Transmission currently in progress.
@@ -67,31 +76,32 @@ lin_m_state_t LIN_M_handler(lin_master_node *master)
                 break;
             }
             //Packet transmitted
-            if (master->LIN_packet.type == RECEIVE)
-            {
+            if (master->LIN_packet.type == RECEIVE) {
                 //Need data returned?
                 //LIN_startTimer(LIN_rxPacket.timeout);
                 master->enableRx();
                 master->readReady = false;
+                // Start Receive, register Callback
+                master->LIN_timerRunning = true;
                 master->readData(master->LIN_packet.data, master->LIN_packet.length);
                 master->state = LIN_M_RX_IP;
-                // Start Receive, register Callback
             } else {
                 master->state = LIN_M_IDLE;
             }
 
             break;
         case LIN_M_RX_IP:
-            //Receiving Packet within window
-            if (master->readReady == false) {
+            //Receiving Packet finished
+            if (master->readReady == true) {
+                master->disableRx();
+                master->state = LIN_M_RX_RDY;
+                break;
+            }
+            if (master->LIN_timerRunning == false) {
                 // Need apply timeout
                 master->state = LIN_M_IDLE;
                 memset(master->LIN_rxPacket.rawPacket, 0, sizeof(master->LIN_rxPacket.rawPacket));
                 break;
-            } else {
-                //All data received and verified
-                master->disableRx();
-                master->state = LIN_M_RX_RDY;
             }
             break;
         case LIN_M_RX_RDY:
@@ -118,7 +128,8 @@ static void LIN_queuePacket(lin_master_node* master, uint8_t cmd, uint8_t* data)
     //clear previous data
     memset(master->LIN_packet.rawPacket, 0, sizeof(master->LIN_packet.rawPacket));
     
-    //Add ID
+    //Add SYNC and ID
+    master->LIN_packet.SYNC = 0x55;
     master->LIN_packet.PID = LIN_calcParity(tempSchedule->cmd);
 
     if (tempSchedule->type == TRANSMIT) {
@@ -159,7 +170,7 @@ static void LIN_M_sendPeriodicTx(lin_master_node* master)
 {
     const lin_cmd_packet_t* periodicTx;    //copy table pointer so we can modify it
     
-    master->timerCallBack = 0;
+    master->LIN_periodCallBack = 0;
 
     periodicTx = master->schedule + master->scheduleIndex;
     
@@ -183,9 +194,9 @@ static void LIN_M_sendPeriodicTx(lin_master_node* master)
  */
 void LIN_M_timerHandler(lin_master_node* master)
 {
-    if (master->timerRunning == true) {
+    if (master->LIN_timerRunning == true) {
         if ((++(master->rxTimeout)) >= master->schedule->timeout) {
-            master->timerRunning = false;
+            master->LIN_timerRunning = false;
             master->rxTimeout = 0;
         }
     }

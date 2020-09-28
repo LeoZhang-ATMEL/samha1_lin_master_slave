@@ -145,6 +145,7 @@ void SYS_Initialize ( void* data )
 
     SERCOM0_USART_Initialize();
 
+	SYSTICK_TimerInitialize();
     SERCOM5_USART_Initialize();
 
     ADC_Initialize();
