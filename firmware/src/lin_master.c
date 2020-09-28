@@ -36,18 +36,17 @@
     MICROCHIP PROVIDES THIS SOFTWARE CONDITIONALLY UPON YOUR ACCEPTANCE OF THESE
     TERMS.
 */
-
 #include "lin_master.h"
 
 lin_m_state_t LIN_M_handler(lin_master_node *master)
 {
     switch (master->state) {
         case LIN_M_IDLE:
-            if (master->writeReady == true) {
-                master->writeReady = false;
+            if (master->LIN_txReady == true) {
+                master->LIN_txReady = false;
                 master->abortRx();
                 master->disableRx();
-                master->writeReady = false;
+                master->txFinished = false;
                 master->sendBreak(true);
                 master->state = LIN_M_TX_BREAK;
             } else {
@@ -56,25 +55,25 @@ lin_m_state_t LIN_M_handler(lin_master_node *master)
             break;
         case LIN_M_TX_BREAK:
             //Transmission currently in progress.
-            if (master->writeReady == false) {
+            if (master->txFinished == false) {
                 break;
             }
             master->sendBreak(false);
-            master->writeData(master->pkg.rawPacket, master->pkg.length + 3); /* Plus SYNC, PID and CRC for 3 bytes */
+            master->writeData(master->LIN_packet.rawPacket, master->LIN_packet.length + 3); /* Plus SYNC, PID and CRC for 3 bytes */
             break;
         case LIN_M_TX_IP:
             //Transmission currently in progress.
-            if (master->writeReady == false) {
+            if (master->txFinished == false) {
                 break;
             }
             //Packet transmitted
-            if (master->pkg.type == RECEIVE)
+            if (master->LIN_packet.type == RECEIVE)
             {
                 //Need data returned?
                 //LIN_startTimer(LIN_rxPacket.timeout);
                 master->enableRx();
                 master->readReady = false;
-                master->readData(master->pkg.data, master->pkg.length);
+                master->readData(master->LIN_packet.data, master->LIN_packet.length);
                 master->state = LIN_M_RX_IP;
                 // Start Receive, register Callback
             } else {
@@ -87,7 +86,7 @@ lin_m_state_t LIN_M_handler(lin_master_node *master)
             if (master->readReady == false) {
                 // Need apply timeout
                 master->state = LIN_M_IDLE;
-                memset(master->pkg.rawPacket, 0, sizeof(master->pkg.rawPacket));
+                memset(master->LIN_rxPacket.rawPacket, 0, sizeof(master->LIN_rxPacket.rawPacket));
                 break;
             } else {
                 //All data received and verified
@@ -104,13 +103,96 @@ lin_m_state_t LIN_M_handler(lin_master_node *master)
     return master->state;
 }
 
+static void LIN_queuePacket(lin_master_node* master, uint8_t cmd, uint8_t* data)
+{
+    //copy table pointer so we can modify it
+    const lin_cmd_packet_t* tempSchedule = master->schedule;
+
+    for(uint8_t i = 0; i < master->scheduleLength; i++){
+        if(cmd == tempSchedule->cmd){
+            break;
+        }
+        tempSchedule++;    //go to next entry
+    }
+    
+    //clear previous data
+    memset(master->LIN_packet.rawPacket, 0, sizeof(master->LIN_packet.rawPacket));
+    
+    //Add ID
+    master->LIN_packet.PID = LIN_calcParity(tempSchedule->cmd);
+
+    if (tempSchedule->type == TRANSMIT) {
+        //Build Packet - User defined data
+        //add data
+        if (tempSchedule->length > 0) {
+            master->LIN_packet.length = tempSchedule->length;
+            memcpy(master->LIN_packet.data, data, tempSchedule->length);
+        } else {
+            master->LIN_packet.length = 1; //send dummy byte for checksum
+            master->LIN_packet.data[0] = 0xAA;
+        }
+
+        //Add Checksum
+        master->LIN_packet.data[master->LIN_packet.length] = 
+                LIN_getChecksum(master->LIN_packet.data, master->LIN_packet.length);
+
+    } else { //Rx packet
+        master->LIN_rxPacket.rxLength = tempSchedule->length; //data length for rx data processing
+        master->LIN_rxPacket.cmd = tempSchedule->cmd; //command for rx data processing
+        master->LIN_rxPacket.timeout = tempSchedule->timeout;
+    }
+    
+    master->LIN_txReady = true;
+}
+
 uint8_t LIN_M_getPacket(lin_master_node* master, uint8_t* data)
 {
-    uint8_t cmd = master->pkg.PID & 0x3F;
+    uint8_t cmd = master->LIN_rxPacket.cmd & 0x3F;
     
-    memcpy(data, master->pkg.data, sizeof(master->pkg.data));
-    memset(master->pkg.rawPacket, 0, sizeof(master->pkg.rawPacket));
+    memcpy(data, master->LIN_rxPacket.data, sizeof(master->LIN_rxPacket.data));
+    memset(master->LIN_rxPacket.rawPacket, 0, sizeof(master->LIN_rxPacket.rawPacket));
     
     return cmd;
 }
 
+static void LIN_M_sendPeriodicTx(lin_master_node* master)
+{
+    const lin_cmd_packet_t* periodicTx;    //copy table pointer so we can modify it
+    
+    master->timerCallBack = 0;
+
+    periodicTx = master->schedule + master->scheduleIndex;
+    
+    if (periodicTx->period > 0) {
+        LIN_queuePacket(master, periodicTx->cmd, periodicTx->data);
+    }
+    
+    do{ //Go to next valid periodic command
+        if(++master->scheduleIndex >= master->scheduleLength){
+            master->scheduleIndex = 0;
+        }
+        periodicTx = master->schedule + master->scheduleIndex;
+    } while(periodicTx->period == 0);
+    
+    master->LIN_period = periodicTx->period;
+}
+
+/**
+ * Callback handler for 1ms period
+ * @param master
+ */
+void LIN_M_timerHandler(lin_master_node* master)
+{
+    if (master->timerRunning == true) {
+        if ((++(master->rxTimeout)) >= master->schedule->timeout) {
+            master->timerRunning = false;
+            master->rxTimeout = 0;
+        }
+    }
+    
+    if (master->enablePeriodTx == true) {
+        if (++master->LIN_periodCallBack >= master->LIN_period) {
+            LIN_M_sendPeriodicTx(master);
+        }
+    }
+}

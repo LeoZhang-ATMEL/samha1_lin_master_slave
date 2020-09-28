@@ -59,7 +59,18 @@ typedef struct {
     uint8_t timeout;
     uint8_t period;
     uint8_t* data;
-}lin_cmd_packet_t;
+} lin_cmd_packet_t;
+
+typedef union {
+    struct {
+        uint8_t cmd;
+        uint8_t rxLength;
+        uint8_t data[8 + 1]; // Data + CheckSum
+        uint8_t checksum;
+        uint8_t timeout;
+    };
+    uint8_t rawPacket[12];
+} lin_rxpacket_t;
 
 typedef struct {
     /* The LIN current state */
@@ -69,7 +80,7 @@ typedef struct {
     volatile bool breaksend;
     /* USART data was ready for read */
     volatile bool readReady;
-    volatile bool writeReady; /* Write Data Finished */
+    volatile bool txFinished; /* Write Data Finished */
     /* LIN Frame Timeout */
     //volatile uint8_t CountCallBack = 0;
     bool enablePeriodTx;
@@ -80,18 +91,25 @@ typedef struct {
     bool (*timerIsRunning)(void);
     void (*enableRx)(void);
     void (*disableRx)(void);
-    void (*abortRx)(void);
+    bool (*abortRx)(void);
     void (*processData)(void);
     bool (*readData)(void *buffer, const size_t size);
     bool (*writeData)(void *buffer, const size_t size);
     
     void (*sendBreak)(bool state); /* Send break */
 
-    lin_cmd_packet_t* txCommand;
-    uint8_t txCommandLength;
+    const lin_cmd_packet_t* schedule; /* List of the commands */
+    uint8_t scheduleIndex; /* index for next scheduled package */
+    uint8_t scheduleLength;
     
-    lin_packet_t pkg;
-    uint8_t rxTimeout;
+    volatile bool LIN_txReady;
+    uint32_t LIN_period; /* Next LIN Package period */
+    
+    lin_packet_t LIN_packet;
+    lin_rxpacket_t LIN_rxPacket;
+    uint8_t rxTimeout; /* Timeout Count Value */
+    uint8_t LIN_periodCallBack; /* Period Count Value */
+    uint32_t timerCallBack; /* Timer Count for 1ms */
 
     uint8_t rxDataIndex;
     size_t (*rxDataCount)(void);
@@ -100,21 +118,17 @@ typedef struct {
 
 //Set up schedule table timings
 
-void LIN_init(uint8_t tableLength, const lin_cmd_packet_t* const table, void (*processData)(void));
+lin_m_state_t LIN_M_handler(lin_master_node *master);
 
-void LIN_queuePacket(uint8_t cmd, uint8_t* data);
+void LIN_init(uint8_t tableLength, const lin_cmd_packet_t* const table, void (*processData)(void));
 
 bool LIN_receivePacket(void);
 
 void LIN_sendPacket(void);
 
-uint8_t LIN_getPacket(uint8_t* data);
+uint8_t LIN_M_getPacket(lin_master_node *master, uint8_t* data);
 
 lin_m_state_t LIN_handler(void);
-
-uint8_t LIN_getChecksum(uint8_t length, uint8_t* data);
-
-uint8_t LIN_calcParity(uint8_t CMD);
 
 //Timer Functions
 void LIN_startTimer(uint8_t timeout);
@@ -136,7 +150,6 @@ void LIN_disableRx(void);
 void LIN_sendBreak(void);
 
 void LIN_sendPeriodicTx(void);
-
 
 #endif	/* LIN_MASTER_H */
 

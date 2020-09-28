@@ -48,7 +48,7 @@ typedef union {
         uint8_t PID;
         uint8_t data[8 + 1]; // Data + Checksum
         lin_packet_type_t type;
-        uint8_t length;
+        uint8_t length; /* Data length, less than 8 */
     };
     uint8_t rawPacket[13];
 }lin_packet_t;

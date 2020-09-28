@@ -30,7 +30,7 @@
 #include "app.h"
 #include <string.h>
 #include "definitions.h"                // SYS function prototypes
-
+#include "lin_master.h"
 // *****************************************************************************
 // *****************************************************************************
 // Section: Global Data Definitions
@@ -53,6 +53,8 @@
 */
 
 APP_DATA appData;
+extern void LIN_M_timerHandler(lin_master_node* master);
+extern lin_master_node lin_mc;
 
 // *****************************************************************************
 // *****************************************************************************
@@ -73,7 +75,10 @@ APP_DATA appData;
 /* TODO:  Add any necessary local functions.
 */
 
-
+void LIN_TimerCallBack(TC_TIMER_STATUS status, uintptr_t context)
+{
+    LIN_M_timerHandler(&lin_mc);
+}
 // *****************************************************************************
 // *****************************************************************************
 // Section: Application Initialization and State Machine Functions
@@ -98,6 +103,8 @@ void APP_Initialize ( void )
     /* TODO: Initialize your application's state machine and other
      * parameters.
      */
+    TC3_TimerCallbackRegister(LIN_TimerCallBack, 0);
+    TC3_TimerStart();
 #if 0
     uint8_t swVer[NVMCTRL_RWWEEPROM_PAGESIZE] = {0x0A, 0x0B, 0x0C, 0x0D, 0x0E, 0x0F, 0x10, 0x11};
     while(NVMCTRL_IsBusy()); // workaround for revE

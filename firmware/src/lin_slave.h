@@ -115,8 +115,6 @@ void LIN_handler(lin_slave_node *slave);
 
 bool LIN_checkPID(lin_slave_node *slave);
 
-uint8_t LIN_calcParity(uint8_t CMD);
-
 
 #endif	/* LIN_H */
 

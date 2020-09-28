@@ -395,7 +395,7 @@
         <property key="communication.activationmode" value="nohv"/>
         <property key="communication.interface" value="swd"/>
         <property key="communication.speed" value="2.000"/>
-        <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="debugoptions.useswbreakpoints" value="true"/>
         <property key="firmware.path"
                   value="Press to browse for a specific firmware version"/>
         <property key="firmware.toolpack"

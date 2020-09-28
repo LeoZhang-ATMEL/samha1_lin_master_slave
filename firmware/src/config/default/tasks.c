@@ -82,7 +82,7 @@ void SYS_Tasks ( void )
 
     /* Maintain the application's state machine. */
         /* Call Application task APP_LIN_SBC. */
-    //APP_LIN_SBC_Tasks();
+    APP_LIN_SBC_Tasks();
 
     /* Call Application task APP_LIN_VCU. */
     APP_LIN_VCU_Tasks();

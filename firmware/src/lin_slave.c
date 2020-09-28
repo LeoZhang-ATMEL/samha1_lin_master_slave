@@ -74,13 +74,13 @@ void LIN_queuePacket(lin_slave_node *slave)
     memcpy(slave->pkg.data, tempSchedule->data, slave->pkg.length);
     
     //Add Checksum
-    slave->pkg.data[slave->pkg.length] = LIN_getChecksum(slave);
+    slave->pkg.data[slave->pkg.length] = LIN_getChecksum(slave->pkg.rawPacket, slave->pkg.length);
     slave->writeData(slave->pkg.data, slave->pkg.length + 1);
 }
 
 void LIN_handler(lin_slave_node *slave)
 {
-    if (slave->rxInProgress == true){
+    if (slave->rxInProgress == true) {
         if(slave->timerIsRunning() == false){
             //Timeout
             slave->state = LIN_RX_ERROR;

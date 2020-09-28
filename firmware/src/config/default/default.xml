@@ -2095,11 +2095,11 @@
         <ElementPosition dnOrder="3" id="dfp" x="300" y="20"/>
         <ElementPosition dnOrder="4" id="evsys" x="160" y="20"/>
         <ElementPosition dnOrder="5" id="nvmctrl" x="20" y="20"/>
-        <ElementPosition dnOrder="6" id="sercom0" x="128" y="302"/>
+        <ElementPosition dnOrder="6" id="sercom0" x="130" y="302"/>
         <ElementPosition dnOrder="7" id="sercom1" x="132" y="126"/>
         <ElementPosition dnOrder="8" id="sercom2" x="288" y="302"/>
         <ElementPosition dnOrder="9" id="sercom5" x="524" y="305"/>
-        <ElementPosition dnOrder="10" id="tc3" x="676" y="350"/>
+        <ElementPosition dnOrder="10" id="tc3" x="650" y="353"/>
         <ElementPosition dnOrder="11" id="tcc1" x="407" y="352"/>
       </ElementPositions>
     </ComponentGraph>
