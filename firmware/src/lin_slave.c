@@ -53,7 +53,7 @@ void LIN_init(lin_slave_node *slave)
     //slave->processData = processData;
 }
 
-void LIN_queuePacket(lin_slave_node *slave)
+static void LIN_queuePacket(lin_slave_node *slave)
 {
     const lin_rx_cmd_t* tempSchedule = slave->rxCommand;    //copy table pointer so we can modify it
     uint8_t cmd  = slave->pkg.PID & 0x3F;

@@ -66,7 +66,7 @@ uint8_t LM_LFRX_Data[8];
 const lin_cmd_packet_t scheduleTable[] = {
     //Command, Type, TX/RX Length, Timeout, Period, Data Address
     {UNLOCK, TRANSMIT, 1, 0, 100, LM_UNLOCK_Data },
-    {RSSI, TRANSMIT, 1, 0, 20, LM_RSSI_Data },
+    {RSSI, TRANSMIT, 1, 0, 100, LM_RSSI_Data },
     {LFRX, RECEIVE, 8, 100, 100, LM_LFRX_Data }
 };
 

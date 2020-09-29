@@ -105,8 +105,6 @@ typedef struct {
 //Set up schedule table timings
 void LIN_init(lin_slave_node *slave);
 
-void LIN_queuePacket(lin_slave_node *slave);
-
 void LIN_sendPacket(uint8_t length, uint8_t* data);
 
 uint8_t LIN_getPacket(lin_slave_node *slave, uint8_t* data);
