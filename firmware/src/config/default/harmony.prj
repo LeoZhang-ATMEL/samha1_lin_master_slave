@@ -139,8 +139,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/default/peripheral/port/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/port/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">8B880B375A00457BF6F045F036B20CC9</GeneratedChecksum>
-          <UserChecksum dnOrder="6">8B880B375A00457BF6F045F036B20CC9</UserChecksum>
+          <GeneratedChecksum dnOrder="5">78B02AB59ADB0B03447D4AD4B099EC02</GeneratedChecksum>
+          <UserChecksum dnOrder="6">78B02AB59ADB0B03447D4AD4B099EC02</UserChecksum>
         </File>
         <File dnOrder="15">
           <Type dnOrder="0">SOURCE</Type>
@@ -481,8 +481,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/default/peripheral/port/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/port/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">DB8B7820D08A320F6CDA99CCAE990A48</GeneratedChecksum>
-          <UserChecksum dnOrder="6">DB8B7820D08A320F6CDA99CCAE990A48</UserChecksum>
+          <GeneratedChecksum dnOrder="5">492FE5FB657F61DA2C6BBC186CBC1CF8</GeneratedChecksum>
+          <UserChecksum dnOrder="6">492FE5FB657F61DA2C6BBC186CBC1CF8</UserChecksum>
         </File>
         <File dnOrder="53">
           <Type dnOrder="0">HEADER</Type>
