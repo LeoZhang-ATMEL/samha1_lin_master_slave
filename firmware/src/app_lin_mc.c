@@ -210,7 +210,7 @@ void APP_LIN_MC_Tasks ( void )
         {
             bool appInitialized = true;
             SERCOM0_USART_WriteCallbackRegister(LIN_MC_SERCOM_USART_TX_CALLBACK, 0);
-            SYSTICK_TimerPeriodSet(32544 + 1000); /* 48000 * 0.675 and some buffer */
+            SYSTICK_TimerPeriodSet(32544 + 5000); /* 48000 * 0.675 and some buffer */
             SYSTICK_TimerCallbackSet(LIN_MC_TIMER_CALLBACK, 0);
 
             if (appInitialized) {

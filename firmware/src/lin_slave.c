@@ -48,7 +48,6 @@
  */
 void LIN_init(lin_slave_node *slave)
 {
-    slave->stopTimer();
     slave->enableRx();
     slave->timerRunning = false;
     //slave->processData = processData;
@@ -90,7 +89,7 @@ void LIN_handler(lin_slave_node *slave)
     switch (slave->state) {
         case LIN_RX_IDLE:
             slave->readAbort();
-            slave->readData(slave->pkg.rawPacket, 9); /* 8 data + 1 CRC */
+            slave->readData(slave->pkg.rawPacket + 1, 9); /* 8 data + 1 CRC */
             slave->enableRx();
             slave->state = LIN_RX_PID;
             break;
@@ -128,7 +127,7 @@ void LIN_handler(lin_slave_node *slave)
         case LIN_RX_DATA:
         case LIN_RX_CHECKSUM:
             if (slave->rxDataCount() >= slave->pkg.length + 2) {
-                if (LIN_getChecksum(slave->pkg.data, slave->pkg.length) != slave->pkg.rawPacket[slave->pkg.length + 1]) {
+                if (LIN_getChecksum(slave->pkg.data, slave->pkg.length) != slave->pkg.rawPacket[slave->pkg.length + 2]) {
                     slave->state = LIN_RX_ERROR;
                 }
                 else {
@@ -137,6 +136,7 @@ void LIN_handler(lin_slave_node *slave)
             }
             break;
         case LIN_RX_TX_DATA:
+            slave->writeFinished = false;
             LIN_queuePacket(slave); //Send response automatically
             slave->state = LIN_RX_TX_READY;
         case LIN_RX_TX_READY:
@@ -147,7 +147,6 @@ void LIN_handler(lin_slave_node *slave)
         case LIN_RX_RDY:
             slave->processData();
         case LIN_RX_ERROR:
-            slave->stopTimer();
             memset(&slave->pkg, 0, sizeof(lin_packet_t));  //clear receive data
         case LIN_RX_WAIT:
             slave->state = LIN_RX_IDLE;
