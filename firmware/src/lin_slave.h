@@ -90,6 +90,8 @@ typedef struct {
     void (*disableRx)(void);
     void (*processData)(void);
     bool (*writeData)(void *buffer, const size_t size);
+    bool (*readData)(void *buffer, const size_t size);
+    bool (*readAbort)(void);
     bool writeFinished;
     lin_rx_cmd_t* rxCommand;
     uint8_t rxCommandLength;

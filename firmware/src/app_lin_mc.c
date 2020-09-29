@@ -67,7 +67,7 @@ const lin_cmd_packet_t scheduleTable[] = {
     //Command, Type, TX/RX Length, Timeout, Period, Data Address
     {UNLOCK, TRANSMIT, 1, 0, 100, LM_UNLOCK_Data },
     {RSSI, TRANSMIT, 1, 0, 20, LM_RSSI_Data },
-    {LFRX, RECEIVE, 8, 100, 0, LM_LFRX_Data }
+    {LFRX, RECEIVE, 8, 100, 100, LM_LFRX_Data }
 };
 
 // *****************************************************************************
@@ -105,6 +105,7 @@ lin_master_node lin_mc = {
     .processData = processLINMC,
     .rxDataCount = SERCOM0_USART_ReadCountGet,
     .writeData = SERCOM0_USART_Write,
+    .readData = SERCOM0_USART_Read,
     .timerCallBack = 0,
     .schedule = scheduleTable,
     .scheduleLength = 3,

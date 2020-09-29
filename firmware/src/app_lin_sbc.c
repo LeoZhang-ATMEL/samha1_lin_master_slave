@@ -77,7 +77,6 @@ lin_rx_cmd_t linSBCCmdTable[] = {
 #define TABLE_SIZE  (sizeof(linSBCCmdTable)/sizeof(lin_rx_cmd_t))
 /* Timeout ms for LIN frame (dependence on BAUDRATE) */
 
-
 static void APP_LIN_SBC_DisableRx(void);
 static void APP_LIN_SBC_EnableRx(void);
 static void processLINSbc(void);
@@ -93,6 +92,8 @@ lin_slave_node lin_sbc = {
     .processData = processLINSbc,
     .rxDataCount = SERCOM5_USART_ReadCountGet,
     .writeData = SERCOM5_USART_Write,
+    .readData = SERCOM5_USART_Read,
+    .readAbort = SERCOM5_USART_ReadAbort,
     .rxCommand = linSBCCmdTable,
     .rxCommandLength = TABLE_SIZE,
 };

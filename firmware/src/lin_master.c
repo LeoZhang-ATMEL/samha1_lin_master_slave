@@ -83,7 +83,7 @@ lin_m_state_t LIN_M_handler(lin_master_node *master)
                 master->readReady = false;
                 // Start Receive, register Callback
                 master->LIN_timerRunning = true;
-                master->readData(master->LIN_packet.data, master->LIN_packet.length);
+                master->readData(master->LIN_rxPacket.data, master->LIN_rxPacket.rxLength);
                 master->state = LIN_M_RX_IP;
             } else {
                 master->state = LIN_M_IDLE;
@@ -99,6 +99,7 @@ lin_m_state_t LIN_M_handler(lin_master_node *master)
             }
             if (master->LIN_timerRunning == false) {
                 // Need apply timeout
+                master->disableRx();
                 master->state = LIN_M_IDLE;
                 memset(master->LIN_rxPacket.rawPacket, 0, sizeof(master->LIN_rxPacket.rawPacket));
                 break;
@@ -127,7 +128,8 @@ static void LIN_queuePacket(lin_master_node* master, uint8_t cmd, uint8_t* data)
     
     //clear previous data
     memset(master->LIN_packet.rawPacket, 0, sizeof(master->LIN_packet.rawPacket));
-    
+
+    master->LIN_packet.type = tempSchedule->type;
     //Add SYNC and ID
     master->LIN_packet.SYNC = 0x55;
     master->LIN_packet.PID = LIN_calcParity(tempSchedule->cmd);
@@ -195,7 +197,7 @@ static void LIN_M_sendPeriodicTx(lin_master_node* master)
 void LIN_M_timerHandler(lin_master_node* master)
 {
     if (master->LIN_timerRunning == true) {
-        if ((++(master->rxTimeout)) >= master->schedule->timeout) {
+        if ((++(master->rxTimeout)) >= master->LIN_rxPacket.timeout) {
             master->LIN_timerRunning = false;
             master->rxTimeout = 0;
         }

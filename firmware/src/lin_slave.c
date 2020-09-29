@@ -89,10 +89,13 @@ void LIN_handler(lin_slave_node *slave)
 
     switch (slave->state) {
         case LIN_RX_IDLE:
+            slave->readAbort();
+            slave->readData(slave->pkg.rawPacket, 9); /* 8 data + 1 CRC */
             slave->enableRx();
             slave->state = LIN_RX_PID;
             break;
         case LIN_RX_BREAK:
+            slave->breakReceived = true; /* Ignore Break interrupt */
             if (slave->breakReceived) {
                 //Start Timer
                 slave->startTimer();
@@ -147,12 +150,7 @@ void LIN_handler(lin_slave_node *slave)
             slave->stopTimer();
             memset(&slave->pkg, 0, sizeof(lin_packet_t));  //clear receive data
         case LIN_RX_WAIT:
-            if (1) {
-                slave->enableRx();
-                slave->state = LIN_RX_IDLE;
-            } else {
-                slave->state = LIN_RX_WAIT;
-            }
+            slave->state = LIN_RX_IDLE;
             break;
     }
 }

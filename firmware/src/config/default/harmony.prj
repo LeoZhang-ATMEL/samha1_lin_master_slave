@@ -139,8 +139,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/default/peripheral/port/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/port/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">63E387ECF2C36B78E4BAE95237CED064</GeneratedChecksum>
-          <UserChecksum dnOrder="6">63E387ECF2C36B78E4BAE95237CED064</UserChecksum>
+          <GeneratedChecksum dnOrder="5">5AD3B9D7FFF232B6925DB5A721FEA798</GeneratedChecksum>
+          <UserChecksum dnOrder="6">5AD3B9D7FFF232B6925DB5A721FEA798</UserChecksum>
         </File>
         <File dnOrder="15">
           <Type dnOrder="0">SOURCE</Type>
@@ -149,7 +149,7 @@
           <LogicalPath dnOrder="3">config/default/peripheral/sercom/usart/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/sercom/usart/</PhysicalPath>
           <GeneratedChecksum dnOrder="5">58DFFBF146D6E7F67566BB0B76E27C69</GeneratedChecksum>
-          <UserChecksum dnOrder="6">08D4C04653D79C728C2780D79603A58C</UserChecksum>
+          <UserChecksum dnOrder="6">57E370C547A249E0F5D6D2E45D3D4F69</UserChecksum>
         </File>
         <File dnOrder="16">
           <Type dnOrder="0">SOURCE</Type>
@@ -157,8 +157,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/default/peripheral/sercom/usart/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/sercom/usart/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">FDBACBDEBE148ABB4FE3A087194BB6D7</GeneratedChecksum>
-          <UserChecksum dnOrder="6">FDBACBDEBE148ABB4FE3A087194BB6D7</UserChecksum>
+          <GeneratedChecksum dnOrder="5">745D23C8BC1F2729E6F963FD7D5258BA</GeneratedChecksum>
+          <UserChecksum dnOrder="6">DC6FCB776B705A197C80FD2878DDDFDD</UserChecksum>
         </File>
         <File dnOrder="17">
           <Type dnOrder="0">SOURCE</Type>
@@ -481,8 +481,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/default/peripheral/port/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/port/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">D0497C5FC8742BB12607F190BBCB85B7</GeneratedChecksum>
-          <UserChecksum dnOrder="6">D0497C5FC8742BB12607F190BBCB85B7</UserChecksum>
+          <GeneratedChecksum dnOrder="5">DB8B7820D08A320F6CDA99CCAE990A48</GeneratedChecksum>
+          <UserChecksum dnOrder="6">DB8B7820D08A320F6CDA99CCAE990A48</UserChecksum>
         </File>
         <File dnOrder="53">
           <Type dnOrder="0">HEADER</Type>
