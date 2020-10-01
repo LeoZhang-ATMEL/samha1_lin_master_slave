@@ -764,24 +764,24 @@
             <User dnOrder="0" value=""/>
           </Values>
         </String>
-        <String dnOrder="148" id="PIN_28_PERIPHERAL_FUNCTION">
+        <String dnOrder="148" id="PIN_28_FUNCTION_TYPE">
+          <Values dnOrder="0">
+            <User dnOrder="0" value="SERCOM1_PAD3"/>
+          </Values>
+        </String>
+        <String dnOrder="149" id="PIN_28_MODE">
           <Values dnOrder="0">
             <User dnOrder="0" value=""/>
           </Values>
         </String>
-        <String dnOrder="149" id="PIN_2_FUNCTION_TYPE">
+        <String dnOrder="150" id="PIN_28_PERIPHERAL_FUNCTION">
           <Values dnOrder="0">
-            <User dnOrder="0" value="SERCOM1_PAD1"/>
-          </Values>
-        </String>
-        <String dnOrder="150" id="PIN_2_MODE">
-          <Values dnOrder="0">
-            <User dnOrder="0" value=""/>
+            <User dnOrder="0" value="C"/>
           </Values>
         </String>
         <String dnOrder="151" id="PIN_2_PERIPHERAL_FUNCTION">
           <Values dnOrder="0">
-            <User dnOrder="0" value="D"/>
+            <User dnOrder="0" value=""/>
           </Values>
         </String>
         <String dnOrder="152" id="PIN_37_DIR">
@@ -1116,7 +1116,7 @@
         </String>
         <String dnOrder="218" id="PORT_GROUP_0_PINCFG1">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="0x1"/>
+            <Dynamic dnOrder="0" id="core" value="0x0"/>
           </Values>
         </String>
         <String dnOrder="219" id="PORT_GROUP_0_PINCFG10">
@@ -1146,7 +1146,7 @@
         </String>
         <String dnOrder="224" id="PORT_GROUP_0_PINCFG19">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="0x0"/>
+            <Dynamic dnOrder="0" id="core" value="0x1"/>
           </Values>
         </String>
         <String dnOrder="225" id="PORT_GROUP_0_PINCFG2">
@@ -1211,7 +1211,7 @@
         </String>
         <String dnOrder="237" id="PORT_GROUP_0_PMUX0">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="0x30"/>
+            <Dynamic dnOrder="0" id="core" value="0x0"/>
           </Values>
         </String>
         <String dnOrder="238" id="PORT_GROUP_0_PMUX1">
@@ -1261,7 +1261,7 @@
         </String>
         <String dnOrder="247" id="PORT_GROUP_0_PMUX9">
           <Values dnOrder="0">
-            <Dynamic dnOrder="0" id="core" value="0x2"/>
+            <Dynamic dnOrder="0" id="core" value="0x22"/>
           </Values>
         </String>
         <Boolean dnOrder="248" id="PORT_GROUP_1">
@@ -2000,7 +2000,7 @@
         </Boolean>
         <KeyValueSet dnOrder="13" id="USART_RXPO">
           <Values dnOrder="0">
-            <User dnOrder="0" value="1"/>
+            <User dnOrder="0" value="3"/>
           </Values>
         </KeyValueSet>
         <Integer dnOrder="14" id="USART_SAMPLE_COUNT">

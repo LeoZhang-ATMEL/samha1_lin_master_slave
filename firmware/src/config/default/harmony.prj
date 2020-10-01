@@ -139,8 +139,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/default/peripheral/port/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/port/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">8B880B375A00457BF6F045F036B20CC9</GeneratedChecksum>
-          <UserChecksum dnOrder="6">8B880B375A00457BF6F045F036B20CC9</UserChecksum>
+          <GeneratedChecksum dnOrder="5">5AD3B9D7FFF232B6925DB5A721FEA798</GeneratedChecksum>
+          <UserChecksum dnOrder="6">5AD3B9D7FFF232B6925DB5A721FEA798</UserChecksum>
         </File>
         <File dnOrder="15">
           <Type dnOrder="0">SOURCE</Type>
@@ -157,8 +157,8 @@
           <Security dnOrder="2">NON_SECURE</Security>
           <LogicalPath dnOrder="3">config/default/peripheral/sercom/usart/</LogicalPath>
           <PhysicalPath dnOrder="4">/peripheral/sercom/usart/</PhysicalPath>
-          <GeneratedChecksum dnOrder="5">7664C14732273F2641A23A46FA0440BC</GeneratedChecksum>
-          <UserChecksum dnOrder="6">68E0B53483C8A90E88631105DF94AFCD</UserChecksum>
+          <GeneratedChecksum dnOrder="5">745D23C8BC1F2729E6F963FD7D5258BA</GeneratedChecksum>
+          <UserChecksum dnOrder="6">DC6FCB776B705A197C80FD2878DDDFDD</UserChecksum>
         </File>
         <File dnOrder="17">
           <Type dnOrder="0">SOURCE</Type>

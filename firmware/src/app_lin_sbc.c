@@ -77,8 +77,6 @@ lin_rx_cmd_t linSBCCmdTable[] = {
 #define TABLE_SIZE  (sizeof(linSBCCmdTable)/sizeof(lin_rx_cmd_t))
 /* Timeout ms for LIN frame (dependence on BAUDRATE) */
 
-static void APP_LIN_SBC_DisableRx(void);
-static void APP_LIN_SBC_EnableRx(void);
 static void processLINSbc(void);
 
 lin_slave_node lin_sbc = {
@@ -87,8 +85,8 @@ lin_slave_node lin_sbc = {
     .timerIsRunning = false,
     .startTimer = TC3_TimerStart,
     .stopTimer = TC3_TimerStop,
-    .disableRx = APP_LIN_SBC_DisableRx,
-    .enableRx = APP_LIN_SBC_EnableRx,
+    .disableRx = SERCOM5_USART_ReceiverDisable,
+    .enableRx = SERCOM5_USART_ReceiverEnable,
     .processData = processLINSbc,
     .rxDataCount = SERCOM5_USART_ReadCountGet,
     .writeData = SERCOM5_USART_Write,
@@ -155,26 +153,6 @@ void processLINSbc(void)
         default:
             break;
     }
-}
-
-static void APP_LIN_SBC_DisableRx(void)
-{
-    SERCOM5_USART_ReadAbort();
-    SERCOM5_REGS->USART_INT.SERCOM_CTRLB &= ~SERCOM_USART_INT_CTRLB_RXEN_Msk;
-    
-    /* Wait for sync */
-    while(SERCOM5_REGS->USART_INT.SERCOM_SYNCBUSY);
-}
-
-static void APP_LIN_SBC_EnableRx(void)
-{
-    lin_sbc.writeFinished = false;
-    SERCOM5_USART_ReadAbort();
-    SERCOM5_USART_Read(lin_sbc.pkg.rawPacket, 9);
-    SERCOM5_REGS->USART_INT.SERCOM_CTRLB |= SERCOM_USART_INT_CTRLB_RXEN_Msk;
-    
-    /* Wait for sync */
-    while(SERCOM5_REGS->USART_INT.SERCOM_SYNCBUSY);
 }
 
 // *****************************************************************************
