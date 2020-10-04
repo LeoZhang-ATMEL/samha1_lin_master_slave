@@ -89,7 +89,7 @@ void LIN_handler(lin_slave_node *slave)
     switch (slave->state) {
         case LIN_RX_IDLE:
             slave->readAbort();
-            slave->readData(slave->pkg.rawPacket + 1, 9); /* 8 data + 1 CRC */
+            slave->readData(slave->pkg.rawPacket + 1, 10); /* 1 PID + 8 data + 1 CRC */
             slave->enableRx();
             slave->state = LIN_RX_PID;
             break;
