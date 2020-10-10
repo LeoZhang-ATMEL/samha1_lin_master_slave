@@ -83,7 +83,7 @@ lin_m_state_t LIN_M_handler(lin_master_node *master)
                 master->readReady = false;
                 // Start Receive, register Callback
                 master->LIN_timerRunning = true;
-                master->readData(master->LIN_rxPacket.data, master->LIN_rxPacket.rxLength);
+                master->readData(master->LIN_rxPacket.data, master->LIN_rxPacket.rxLength + 1);
                 master->state = LIN_M_RX_IP;
             } else {
                 master->state = LIN_M_IDLE;

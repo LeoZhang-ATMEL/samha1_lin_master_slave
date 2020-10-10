@@ -124,13 +124,11 @@ void processLINMC(void)
 
     switch (cmd) {
         case UNLOCK:
-            if (data[0] == 0x01) {
-            } else {
-            }
             break;
         case RSSI:
             break;
         case LFRX:
+            LED0_Toggle();
             break;
         default:
             break;
@@ -163,6 +161,11 @@ void LIN_MC_SERCOM_USART_CALLBACK( uintptr_t context )
 void LIN_MC_SERCOM_USART_TX_CALLBACK( uintptr_t context )
 {
     lin_mc.txFinished = true;
+}
+
+void LIN_MC_SERCOM_USART_RX_CALLBACK( uintptr_t context )
+{
+    lin_mc.readReady = true;
 }
 
 void LIN_MC_TIMER_CALLBACK( uintptr_t context )
@@ -210,6 +213,8 @@ void APP_LIN_MC_Tasks ( void )
         {
             bool appInitialized = true;
             SERCOM0_USART_WriteCallbackRegister(LIN_MC_SERCOM_USART_TX_CALLBACK, 0);
+            SERCOM0_USART_ReadCallbackRegister(LIN_MC_SERCOM_USART_RX_CALLBACK, 0);
+            
             SYSTICK_TimerPeriodSet(32544 + 5000); /* 48000 * 0.675 and some buffer */
             SYSTICK_TimerCallbackSet(LIN_MC_TIMER_CALLBACK, 0);
 

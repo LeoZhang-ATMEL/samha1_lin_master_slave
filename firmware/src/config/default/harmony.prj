@@ -706,7 +706,7 @@
       <Setting dnOrder="2" key="FORCE_OPTIMIZATION" value="false"/>
       <Setting dnOrder="3" key="GENERATE_BACKUP" value="true"/>
       <Setting dnOrder="4" key="MERGE_STRATEGY" value="USER_ALL"/>
-      <Setting dnOrder="5" key="PackageFilter" value="audio;aws_cloud;bootloader;bsp;bt;core;crypto;cryptoauthlib;cryptoauthlib_apps;csp;csp_apps_sam_c20_c21;csp_apps_sam_d21_da1;expresslogic_threadx;gfx;gfx_apps;micrium_ucos3;motor_control;net;quick_docs;touch;usb;wireless;x2c;"/>
+      <Setting dnOrder="5" key="PackageFilter" value="audio;aws_cloud;bootloader;bsp;bt;core;crypto;cryptoauthlib;cryptoauthlib_apps;csp;csp_apps_sam_c20_c21;csp_apps_sam_d21_da1;expresslogic_threadx;gfx;gfx_apps;micrium_ucos3;motor_control;net;quick_docs;touch;touch_apps;usb;wireless;x2c;"/>
       <Setting dnOrder="6" key="TRUSTZONE" value="false"/>
     </Settings>
   </Configurator>

@@ -70,7 +70,7 @@ uint8_t V_LFRX_Data[8] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
 lin_rx_cmd_t linVCUCmdTable[] = {
     //Command, Type, TX/RX Length, Data Address
     {UNLOCK, RECEIVE, 1, V_UNLOCK_Data },
-    {RSSI, RECEIVE, 8, V_RSSI_Data },
+    {RSSI, RECEIVE, 1, V_RSSI_Data },
     {LFRX, TRANSMIT, 8, V_LFRX_Data }
 };
 #define TABLE_SIZE  (sizeof(linVCUCmdTable)/sizeof(lin_rx_cmd_t))
@@ -131,10 +131,10 @@ void processLINVcu(void)
 
     switch (cmd) {
         case UNLOCK:
-            LED0_Clear();
+            //LED0_Clear();
             break;
         case RSSI:
-            LED0_Set();
+            //LED0_Set();
             break;
         case LFRX:
             break;
