@@ -64,6 +64,9 @@ lin_m_state_t LIN_M_handler(lin_master_node *master)
             master->txFinished = false;
             master->sendBreak(false);
             if (master->LIN_packet.type == RECEIVE) {
+                master->enableRx();
+                master->readReady = false;
+                master->readData(master->LIN_rxPacket.rawPacket + 2, 2); /* Receive SYNC, PID, 2 bytes */
                 master->writeData(master->LIN_packet.rawPacket, 2); /* Plus SYNC, PID, 2 bytes */
             } else {
                 master->writeData(master->LIN_packet.rawPacket, master->LIN_packet.length + 3); /* Plus SYNC, PID and CRC for 3 bytes */
@@ -72,13 +75,12 @@ lin_m_state_t LIN_M_handler(lin_master_node *master)
             break;
         case LIN_M_TX_IP:
             //Transmission currently in progress.
-            if (master->txFinished == false) {
+            if (master->txFinished == false ||
+                    (master->LIN_packet.type == RECEIVE && master->readReady == false)) {
                 break;
             }
             //Packet transmitted
             if (master->LIN_packet.type == RECEIVE) {
-                //Need data returned?
-                //LIN_startTimer(LIN_rxPacket.timeout);
                 master->enableRx();
                 master->readReady = false;
                 // Start Receive, register Callback
